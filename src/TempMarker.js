@@ -1,6 +1,6 @@
 "use strict";
 
-let tmpMarkerId = "snipItTemporaryMarker";
+const tmpMarkerId = "snipItTemporaryMarker";
 
 class TempMarker
 {

@@ -104,6 +104,10 @@ var _TempMarker = require("./TempMarker");
 
 var _TempMarker2 = _interopRequireDefault(_TempMarker);
 
+var _PanelSave = require("./panel-save/PanelSave");
+
+var _PanelSave2 = _interopRequireDefault(_PanelSave);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -139,6 +143,7 @@ var SnipIt = function () {
                 _TempMarker2.default.destroy();
             } else {
                 _SnipButton2.default.destroy();
+                _PanelSave2.default.hide();
             }
         }
     }, {
@@ -175,7 +180,8 @@ var SnipIt = function () {
             var selectionText = this.getSelectionText(selection);
 
             // TODO: do something useful with the selected text
-            console.log(selectionText);
+            _PanelSave2.default.create();
+            _PanelSave2.default.show(selectionText);
         }
     }]);
 
@@ -184,7 +190,7 @@ var SnipIt = function () {
 
 exports.default = new SnipIt();
 
-},{"./SnipButton":2,"./TempMarker":4}],4:[function(require,module,exports){
+},{"./SnipButton":2,"./TempMarker":4,"./panel-save/PanelSave":5}],4:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -253,5 +259,85 @@ var TempMarker = function () {
 }();
 
 exports.default = new TempMarker();
+
+},{}],5:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var panelSaveId = "snipItPanelSave";
+
+var PanelSave = function () {
+    function PanelSave() {
+        _classCallCheck(this, PanelSave);
+    }
+
+    _createClass(PanelSave, [{
+        key: "create",
+        value: function create() {
+            var panel = this.get();
+
+            if (!panel) {
+                // create element
+                panel = document.createElement("div");
+                panel.id = panelSaveId;
+
+                // TODO: move the styles in a separate .css file and use a class
+                panel.style.position = 'fixed';
+                panel.style.zIndex = 99999;
+                panel.style.top = "50%";
+                panel.style.left = "50%";
+                panel.style.transform = "translate(-50%, -50%)";
+                panel.style.display = 'none';
+                panel.style.padding = "20px";
+                panel.style.backgroundColor = "#fff";
+                panel.style.boxShadow = "0 2px 3px rgba(0,0,0,0.3)";
+                panel.style.color = "#333";
+                panel.style.fontSize = "16px";
+
+                // add to document body
+                document.body.appendChild(panel);
+            }
+
+            return panel;
+        }
+    }, {
+        key: "get",
+        value: function get() {
+            return document.getElementById(panelSaveId);
+        }
+    }, {
+        key: "show",
+        value: function show() {
+            var text = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
+
+            var panel = this.get();
+
+            if (text) {
+                panel.style.display = 'block';
+                panel.innerText = text;
+            }
+        }
+    }, {
+        key: "hide",
+        value: function hide() {
+            var panel = this.get();
+
+            if (panel) {
+                panel.style.display = 'none';
+            }
+        }
+    }]);
+
+    return PanelSave;
+}();
+
+exports.default = new PanelSave();
 
 },{}]},{},[1]);

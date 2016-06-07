@@ -1,7 +1,7 @@
 "use strict";
 
-let snipButtonId = "snipItButton";
-let snipButtonText = "Snip It!";
+const snipButtonId = "snipItButton";
+const snipButtonText = "Snip It!";
 
 class SnipButton
 {
