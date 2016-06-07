@@ -5,9 +5,17 @@ import TempMarker from "./TempMarker";
 
 class SnipIt
 {
-    getText() {
-        var selection = window.getSelection();
-        var selectionText = selection.toString().trim();
+    getSelection() {
+        return window.getSelection();
+    }
+
+    getSelectionText(selection) {
+        return selection.toString().trim();
+    }
+
+    onMouseUp() {
+        let selection = this.getSelection();
+        let selectionText = this.getSelectionText(selection);
 
         if (selectionText.length > 0) {
 
@@ -17,9 +25,6 @@ class SnipIt
 
             SnipButton.setPosition(TempMarker.getPosition());
             TempMarker.destroy();
-
-            // TODO: create a functional callback
-            this.callback(selectionText);
         }
         else {
             SnipButton.destroy();
@@ -27,8 +32,15 @@ class SnipIt
     }
 
     init() {
-        document.onmouseup = this.getText;
+        document.onmouseup = () => {
+            this.onMouseUp();
+        };
         //if (!document.all) document.captureEvents(Event.MOUSEUP);
+
+        // overwrite behaviour for button click callback
+        SnipButton.onButtonClick = () => {
+            this.onButtonClick();
+        };
 
         /*
         var pres = document.getElementsByTagName('pre');
@@ -40,11 +52,13 @@ class SnipIt
         //*/
     }
 
-    // mock callback which receives the selected text
-    callback(t) {
-        if (t.length > 0) {
-            console.log(t.toString());
-        }
+    // callback action
+    onButtonClick() {
+        let selection = this.getSelection();
+        let selectionText = this.getSelectionText( selection );
+
+        // TODO: do something useful with the selected text
+        console.log(selectionText);
     }
 }
 

@@ -35,13 +35,18 @@ var SnipButton = function () {
 
             if (!btn) {
                 // create element
-                btn = document.createElement("span");
+                btn = document.createElement("button");
                 btn.id = snipButtonId;
                 btn.appendChild(document.createTextNode(snipButtonText));
+
                 // style element
                 btn.style.border = "solid darkblue 1px";
                 btn.style.backgroundColor = "lightgoldenrodyellow";
                 btn.style.position = "absolute";
+
+                // attach behaviour
+                btn.onclick = this.onButtonClick;
+
                 // add to document body
                 document.body.appendChild(btn);
             }
@@ -69,6 +74,11 @@ var SnipButton = function () {
             if (btn) {
                 btn.parentNode.removeChild(btn);
             }
+        }
+    }, {
+        key: "onButtonClick",
+        value: function onButtonClick() {
+            // this should be overwritten with custom behaviour
         }
     }]);
 
@@ -104,10 +114,20 @@ var SnipIt = function () {
     }
 
     _createClass(SnipIt, [{
-        key: "getText",
-        value: function getText() {
-            var selection = window.getSelection();
-            var selectionText = selection.toString().trim();
+        key: "getSelection",
+        value: function getSelection() {
+            return window.getSelection();
+        }
+    }, {
+        key: "getSelectionText",
+        value: function getSelectionText(selection) {
+            return selection.toString().trim();
+        }
+    }, {
+        key: "onMouseUp",
+        value: function onMouseUp() {
+            var selection = this.getSelection();
+            var selectionText = this.getSelectionText(selection);
 
             if (selectionText.length > 0) {
 
@@ -117,9 +137,6 @@ var SnipIt = function () {
 
                 _SnipButton2.default.setPosition(_TempMarker2.default.getPosition());
                 _TempMarker2.default.destroy();
-
-                // TODO: create a functional callback
-                this.callback(selectionText);
             } else {
                 _SnipButton2.default.destroy();
             }
@@ -127,8 +144,17 @@ var SnipIt = function () {
     }, {
         key: "init",
         value: function init() {
-            document.onmouseup = this.getText;
+            var _this = this;
+
+            document.onmouseup = function () {
+                _this.onMouseUp();
+            };
             //if (!document.all) document.captureEvents(Event.MOUSEUP);
+
+            // overwrite behaviour for button click callback
+            _SnipButton2.default.onButtonClick = function () {
+                _this.onButtonClick();
+            };
 
             /*
             var pres = document.getElementsByTagName('pre');
@@ -140,14 +166,16 @@ var SnipIt = function () {
             //*/
         }
 
-        // mock callback which receives the selected text
+        // callback action
 
     }, {
-        key: "callback",
-        value: function callback(t) {
-            if (t.length > 0) {
-                console.log(t.toString());
-            }
+        key: "onButtonClick",
+        value: function onButtonClick() {
+            var selection = this.getSelection();
+            var selectionText = this.getSelectionText(selection);
+
+            // TODO: do something useful with the selected text
+            console.log(selectionText);
         }
     }]);
 

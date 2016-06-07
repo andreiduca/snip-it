@@ -10,13 +10,18 @@ class SnipButton
 
         if (!btn) {
             // create element
-            btn = document.createElement("span");
+            btn = document.createElement("button");
             btn.id = snipButtonId;
             btn.appendChild(document.createTextNode(snipButtonText));
+
             // style element
             btn.style.border = "solid darkblue 1px";
             btn.style.backgroundColor = "lightgoldenrodyellow";
             btn.style.position = "absolute";
+
+            // attach behaviour
+            btn.onclick = this.onButtonClick;
+
             // add to document body
             document.body.appendChild(btn);
         }
@@ -41,6 +46,10 @@ class SnipButton
         if (btn) {
             btn.parentNode.removeChild(btn);
         }
+    }
+
+    onButtonClick() {
+        // this should be overwritten with custom behaviour
     }
 }
 
