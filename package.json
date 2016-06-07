@@ -1,0 +1,33 @@
+{
+  "name": "snip-it",
+  "version": "1.0.0",
+  "description": "A browser extension to snip code blocks and text selections from web pages. The tools lets you save and organize your code snippets in the cloud.",
+  "main": "index.js",
+  "scripts": {
+    "build-safari-plugin": "browserify SnipIt.safariextension/src/snip-it.js -t babelify --outfile SnipIt.safariextension/bin/snip-it.js",
+    "build-safari": "npm run build-safari-plugin",
+    "build": "npm run build-safari"
+  },
+  "keywords": [
+    "snip",
+    "code",
+    "dev",
+    "tools",
+    "browser",
+    "extension",
+    "code",
+    "blocks",
+    "developer",
+    "tool",
+    "organize"
+  ],
+  "author": "Andrei Duca <duca.andrei@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "babel": "6.5.2",
+    "babel-cli": "6.9.0",
+    "babel-preset-es2015": "6.9.0",
+    "babelify": "7.3.0",
+    "browserify": "13.0.1"
+  }
+}
