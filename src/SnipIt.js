@@ -15,6 +15,7 @@ class SnipIt
         return selection.toString().trim();
     }
 
+    // TODO: check if not inside the plugin's panel
     onMouseUp() {
         let selection = this.getSelection();
         let selectionText = this.getSelectionText(selection);
@@ -35,15 +36,12 @@ class SnipIt
     }
 
     init() {
-        document.onmouseup = () => {
-            this.onMouseUp();
-        };
+        // attach behaviour on global mouseUp
+        document.onmouseup = this.onMouseUp.bind(this);
         //if (!document.all) document.captureEvents(Event.MOUSEUP);
 
         // overwrite behaviour for button click callback
-        SnipButton.onButtonClick = () => {
-            this.onButtonClick();
-        };
+        SnipButton.onButtonClick = this.onButtonClick.bind(this);
 
         /*
         var pres = document.getElementsByTagName('pre');

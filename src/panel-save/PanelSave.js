@@ -43,7 +43,7 @@ class PanelSave
 
         if (text) {
             panel.style.display = 'block';
-            panel.innerText = text;
+            panel.innerHTML = `<pre>${text}</pre>`;
         }
     }
 

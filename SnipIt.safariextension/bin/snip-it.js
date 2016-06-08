@@ -127,6 +127,9 @@ var SnipIt = function () {
         value: function getSelectionText(selection) {
             return selection.toString().trim();
         }
+
+        // TODO: check if not inside the plugin's panel
+
     }, {
         key: "onMouseUp",
         value: function onMouseUp() {
@@ -149,17 +152,12 @@ var SnipIt = function () {
     }, {
         key: "init",
         value: function init() {
-            var _this = this;
-
-            document.onmouseup = function () {
-                _this.onMouseUp();
-            };
+            // attach behaviour on global mouseUp
+            document.onmouseup = this.onMouseUp.bind(this);
             //if (!document.all) document.captureEvents(Event.MOUSEUP);
 
             // overwrite behaviour for button click callback
-            _SnipButton2.default.onButtonClick = function () {
-                _this.onButtonClick();
-            };
+            _SnipButton2.default.onButtonClick = this.onButtonClick.bind(this);
 
             /*
             var pres = document.getElementsByTagName('pre');
@@ -321,7 +319,7 @@ var PanelSave = function () {
 
             if (text) {
                 panel.style.display = 'block';
-                panel.innerText = text;
+                panel.innerHTML = "<pre>" + text + "</pre>";
             }
         }
     }, {
