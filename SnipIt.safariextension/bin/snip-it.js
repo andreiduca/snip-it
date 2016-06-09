@@ -104,7 +104,11 @@ var _TempMarker = require("./TempMarker");
 
 var _TempMarker2 = _interopRequireDefault(_TempMarker);
 
-var _PanelSave = require("./panel-save/PanelSave");
+var _PanelShade = require("./panels/PanelShade");
+
+var _PanelShade2 = _interopRequireDefault(_PanelShade);
+
+var _PanelSave = require("./panels/PanelSave");
 
 var _PanelSave2 = _interopRequireDefault(_PanelSave);
 
@@ -147,6 +151,7 @@ var SnipIt = function () {
             } else {
                 _SnipButton2.default.destroy();
                 _PanelSave2.default.hide();
+                _PanelShade2.default.hide();
             }
         }
     }, {
@@ -178,8 +183,10 @@ var SnipIt = function () {
             var selectionText = this.getSelectionText(selection);
 
             // TODO: do something useful with the selected text
-            _PanelSave2.default.create();
-            _PanelSave2.default.show(selectionText);
+            if (selectionText) {
+                _PanelShade2.default.show();
+                _PanelSave2.default.show(selectionText);
+            }
         }
     }]);
 
@@ -188,7 +195,7 @@ var SnipIt = function () {
 
 exports.default = new SnipIt();
 
-},{"./SnipButton":2,"./TempMarker":4,"./panel-save/PanelSave":5}],4:[function(require,module,exports){
+},{"./SnipButton":2,"./TempMarker":4,"./panels/PanelSave":5,"./panels/PanelShade":6}],4:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -287,12 +294,12 @@ var PanelSave = function () {
                 panel.id = panelSaveId;
 
                 // TODO: move the styles in a separate .css file and use a class
+                panel.style.display = 'none';
                 panel.style.position = 'fixed';
-                panel.style.zIndex = 99999;
+                panel.style.zIndex = '99999';
                 panel.style.top = "50%";
                 panel.style.left = "50%";
                 panel.style.transform = "translate(-50%, -50%)";
-                panel.style.display = 'none';
                 panel.style.padding = "20px";
                 panel.style.backgroundColor = "#fff";
                 panel.style.boxShadow = "0 2px 3px rgba(0,0,0,0.3)";
@@ -315,12 +322,10 @@ var PanelSave = function () {
         value: function show() {
             var text = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
 
-            var panel = this.get();
+            var panel = this.create();
 
-            if (text) {
-                panel.style.display = 'block';
-                panel.innerHTML = "<pre>" + text + "</pre>";
-            }
+            panel.style.display = 'block';
+            panel.innerHTML = "<pre>" + text + "</pre>";
         }
     }, {
         key: "hide",
@@ -337,5 +342,78 @@ var PanelSave = function () {
 }();
 
 exports.default = new PanelSave();
+
+},{}],6:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var panelShadeId = "snipItPanelShade";
+
+var PanelShade = function () {
+    function PanelShade() {
+        _classCallCheck(this, PanelShade);
+    }
+
+    _createClass(PanelShade, [{
+        key: "create",
+        value: function create() {
+            var shade = this.get();
+
+            if (!shade) {
+                shade = document.createElement("div");
+                shade.id = panelShadeId;
+
+                shade.style.display = 'none';
+                shade.style.position = 'fixed';
+                shade.style.zIndex = '99998';
+                shade.style.top = '0';
+                shade.style.left = '0';
+                shade.style.width = '100%';
+                shade.style.height = '100%';
+
+                shade.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+                shade.style.webkitBackdropFilter = 'saturate(180%) blur(20px)';
+                shade.style.backdropFilter = 'saturate(180%) blur(20px)';
+
+                // add to document body
+                document.body.appendChild(shade);
+            }
+
+            return shade;
+        }
+    }, {
+        key: "get",
+        value: function get() {
+            return document.getElementById(panelShadeId);
+        }
+    }, {
+        key: "show",
+        value: function show() {
+            var shade = this.create();
+
+            shade.style.display = 'block';
+        }
+    }, {
+        key: "hide",
+        value: function hide() {
+            var shade = this.get();
+
+            if (shade) {
+                shade.style.display = 'none';
+            }
+        }
+    }]);
+
+    return PanelShade;
+}();
+
+exports.default = new PanelShade();
 
 },{}]},{},[1]);

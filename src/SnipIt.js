@@ -3,7 +3,8 @@
 import SnipButton from "./SnipButton";
 import TempMarker from "./TempMarker";
 
-import PanelSave from "./panel-save/PanelSave";
+import PanelShade from "./panels/PanelShade";
+import PanelSave from "./panels/PanelSave";
 
 class SnipIt
 {
@@ -32,6 +33,7 @@ class SnipIt
         else {
             SnipButton.destroy();
             PanelSave.hide();
+            PanelShade.hide();
         }
     }
 
@@ -59,8 +61,10 @@ class SnipIt
         let selectionText = this.getSelectionText( selection );
 
         // TODO: do something useful with the selected text
-        PanelSave.create();
-        PanelSave.show(selectionText);
+        if (selectionText) {
+            PanelShade.show();
+            PanelSave.show(selectionText);
+        }
     }
 }
 
