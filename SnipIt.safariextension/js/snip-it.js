@@ -129,7 +129,18 @@ var SnipIt = function () {
 
 exports.default = new SnipIt();
 
-},{"../modules/SnipButton":2,"../modules/TempMarker":3,"../modules/panels/PanelSave":4,"../modules/panels/PanelShade":5}],2:[function(require,module,exports){
+},{"../modules/SnipButton":3,"../modules/TempMarker":4,"../modules/panels/PanelSave":5,"../modules/panels/PanelShade":6}],2:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+exports.default = function (htmlText) {
+    return String(htmlText).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+};
+
+},{}],3:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -202,7 +213,7 @@ var SnipButton = function () {
 
 exports.default = new SnipButton();
 
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -272,7 +283,7 @@ var TempMarker = function () {
 
 exports.default = new TempMarker();
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -280,6 +291,12 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _HtmlEntities = require("../../helpers/HtmlEntities");
+
+var _HtmlEntities2 = _interopRequireDefault(_HtmlEntities);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -319,7 +336,7 @@ var PanelSave = function () {
             var panel = this.create();
 
             panel.style.display = 'block';
-            panel.innerHTML = "<div>\n      <div><strong>Title:</strong> " + document.title + "</div>\n      <div><strong>URL:</strong> " + document.location.href + "</div>\n      <div><strong>Code:</strong></div>\n      <pre>" + text + "</pre>\n      <button>Save!</button>\n</div>";
+            panel.innerHTML = "<div>\n      <div><strong>Title:</strong> " + document.title + "</div>\n      <div><strong>URL:</strong> " + document.location.href + "</div>\n      <div><strong>Code:</strong></div>\n      <pre>" + (0, _HtmlEntities2.default)(text) + "</pre>\n      <button>Save!</button>\n</div>";
         }
     }, {
         key: "hide",
@@ -337,7 +354,7 @@ var PanelSave = function () {
 
 exports.default = new PanelSave();
 
-},{}],5:[function(require,module,exports){
+},{"../../helpers/HtmlEntities":2}],6:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -406,7 +423,7 @@ var PanelShade = function () {
 
 exports.default = new PanelShade();
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 "use strict";
 
 var _SnipIt = require("./app/SnipIt");
@@ -417,4 +434,4 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 _SnipIt2.default.init();
 
-},{"./app/SnipIt":1}]},{},[6]);
+},{"./app/SnipIt":1}]},{},[7]);

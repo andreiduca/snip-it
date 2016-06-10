@@ -1,5 +1,7 @@
 "use strict";
 
+import HtmlEntities from "../../helpers/HtmlEntities";
+
 const panelSaveId = "snipItPanelSave";
 
 class PanelSave
@@ -33,7 +35,7 @@ class PanelSave
       <div><strong>Title:</strong> ${document.title}</div>
       <div><strong>URL:</strong> ${document.location.href}</div>
       <div><strong>Code:</strong></div>
-      <pre>${text}</pre>
+      <pre>${HtmlEntities(text)}</pre>
       <button>Save!</button>
 </div>`;
     }
