@@ -1,10 +1,10 @@
 "use strict";
 
-import SnipButton from "./SnipButton";
-import TempMarker from "./TempMarker";
+import SnipButton from "../modules/SnipButton";
+import TempMarker from "../modules/TempMarker";
 
-import PanelShade from "./panels/PanelShade";
-import PanelSave from "./panels/PanelSave";
+import PanelShade from "../modules/panels/PanelShade";
+import PanelSave from "../modules/panels/PanelSave";
 
 class SnipIt
 {

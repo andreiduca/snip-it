@@ -1,0 +1,1 @@
+browserify src/snip-it.js -t babelify --outfile SnipIt.chromeextension/js/snip-it.js

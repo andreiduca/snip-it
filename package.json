@@ -7,7 +7,10 @@
     "build": "./bin/build",
     "build-safari": "./bin/build-safari",
     "build-safari-js": "./bin/build-safari-js",
-    "build-safari-css": "./bin/build-safari-css"
+    "build-safari-css": "./bin/build-safari-css",
+    "build-chrome": "./bin/build-chrome",
+    "build-chrome-js": "./bin/build-chrome-js",
+    "build-chrome-css": "./bin/build-chrome-css"
   },
   "keywords": [
     "snip",

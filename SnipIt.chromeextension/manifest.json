@@ -1,0 +1,17 @@
+{
+  "manifest_version": 2,
+
+  "name": "SnipIt",
+  "description": "",
+  "version": "1.0",
+
+  "content_scripts": [{
+    "matches": ["<all_urls>"],
+    "js": ["load.js"],
+    "css": ["css/snip-it.css"]
+  }],
+
+  "web_accessible_resources": [
+    "js/snip-it.js"
+  ]
+}

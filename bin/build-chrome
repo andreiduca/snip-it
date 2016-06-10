@@ -1,0 +1,2 @@
+npm run build-chrome-js
+npm run build-chrome-css

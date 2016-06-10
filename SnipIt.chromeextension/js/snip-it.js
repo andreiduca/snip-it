@@ -1,109 +1,25 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 "use strict";
 
-var _SnipIt = require("../../src/SnipIt");
-
-var _SnipIt2 = _interopRequireDefault(_SnipIt);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-_SnipIt2.default.init();
-
-},{"../../src/SnipIt":3}],2:[function(require,module,exports){
-"use strict";
-
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var snipButtonId = "snipItButton";
-var snipButtonText = "Snip It!";
-
-var SnipButton = function () {
-    function SnipButton() {
-        _classCallCheck(this, SnipButton);
-    }
-
-    _createClass(SnipButton, [{
-        key: "create",
-        value: function create() {
-            var btn = this.get();
-
-            if (!btn) {
-                // create element
-                btn = document.createElement("button");
-                btn.id = snipButtonId;
-                btn.appendChild(document.createTextNode(snipButtonText));
-
-                // attach behaviour
-                btn.onclick = this.onButtonClick;
-
-                // add to document body
-                document.body.appendChild(btn);
-            }
-
-            return btn;
-        }
-    }, {
-        key: "get",
-        value: function get() {
-            return document.getElementById(snipButtonId);
-        }
-    }, {
-        key: "setPosition",
-        value: function setPosition(position) {
-            var btn = this.create();
-
-            btn.style.top = position.top + "px";
-            btn.style.left = position.left + "px";
-        }
-    }, {
-        key: "destroy",
-        value: function destroy() {
-            var btn = this.get();
-
-            if (btn) {
-                btn.parentNode.removeChild(btn);
-            }
-        }
-    }, {
-        key: "onButtonClick",
-        value: function onButtonClick() {
-            // this should be overwritten with custom behaviour
-        }
-    }]);
-
-    return SnipButton;
-}();
-
-exports.default = new SnipButton();
-
-},{}],3:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _SnipButton = require("./SnipButton");
+var _SnipButton = require("../modules/SnipButton");
 
 var _SnipButton2 = _interopRequireDefault(_SnipButton);
 
-var _TempMarker = require("./TempMarker");
+var _TempMarker = require("../modules/TempMarker");
 
 var _TempMarker2 = _interopRequireDefault(_TempMarker);
 
-var _PanelShade = require("./panels/PanelShade");
+var _PanelShade = require("../modules/panels/PanelShade");
 
 var _PanelShade2 = _interopRequireDefault(_PanelShade);
 
-var _PanelSave = require("./panels/PanelSave");
+var _PanelSave = require("../modules/panels/PanelSave");
 
 var _PanelSave2 = _interopRequireDefault(_PanelSave);
 
@@ -213,7 +129,80 @@ var SnipIt = function () {
 
 exports.default = new SnipIt();
 
-},{"./SnipButton":2,"./TempMarker":4,"./panels/PanelSave":5,"./panels/PanelShade":6}],4:[function(require,module,exports){
+},{"../modules/SnipButton":2,"../modules/TempMarker":3,"../modules/panels/PanelSave":4,"../modules/panels/PanelShade":5}],2:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var snipButtonId = "snipItButton";
+var snipButtonText = "Snip It!";
+
+var SnipButton = function () {
+    function SnipButton() {
+        _classCallCheck(this, SnipButton);
+    }
+
+    _createClass(SnipButton, [{
+        key: "create",
+        value: function create() {
+            var btn = this.get();
+
+            if (!btn) {
+                // create element
+                btn = document.createElement("button");
+                btn.id = snipButtonId;
+                btn.appendChild(document.createTextNode(snipButtonText));
+
+                // attach behaviour
+                btn.onclick = this.onButtonClick;
+
+                // add to document body
+                document.body.appendChild(btn);
+            }
+
+            return btn;
+        }
+    }, {
+        key: "get",
+        value: function get() {
+            return document.getElementById(snipButtonId);
+        }
+    }, {
+        key: "setPosition",
+        value: function setPosition(position) {
+            var btn = this.create();
+
+            btn.style.top = position.top + "px";
+            btn.style.left = position.left + "px";
+        }
+    }, {
+        key: "destroy",
+        value: function destroy() {
+            var btn = this.get();
+
+            if (btn) {
+                btn.parentNode.removeChild(btn);
+            }
+        }
+    }, {
+        key: "onButtonClick",
+        value: function onButtonClick() {
+            // this should be overwritten with custom behaviour
+        }
+    }]);
+
+    return SnipButton;
+}();
+
+exports.default = new SnipButton();
+
+},{}],3:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -283,7 +272,7 @@ var TempMarker = function () {
 
 exports.default = new TempMarker();
 
-},{}],5:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -348,7 +337,7 @@ var PanelSave = function () {
 
 exports.default = new PanelSave();
 
-},{}],6:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -417,4 +406,15 @@ var PanelShade = function () {
 
 exports.default = new PanelShade();
 
-},{}]},{},[1]);
+},{}],6:[function(require,module,exports){
+"use strict";
+
+var _SnipIt = require("./app/SnipIt");
+
+var _SnipIt2 = _interopRequireDefault(_SnipIt);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+_SnipIt2.default.init();
+
+},{"./app/SnipIt":1}]},{},[6]);
