@@ -8,6 +8,11 @@ import PanelSave from "./panels/PanelSave";
 
 class SnipIt
 {
+    constructor() {
+        // by default, no panels are displayed
+        this.isPanelOpen = false;
+    }
+
     getSelection() {
         return window.getSelection();
     }
@@ -16,24 +21,28 @@ class SnipIt
         return selection.toString().trim();
     }
 
-    // TODO: check if not inside the plugin's panel
     onMouseUp() {
+        // if a panel is open, do nothing
+        if (this.isPanelOpen) {
+            return;
+        }
+
+        // get the selection and its text
         let selection = this.getSelection();
         let selectionText = this.getSelectionText(selection);
 
         if (selectionText.length > 0) {
-
+            // insert a temporary marker
             let range = selection.getRangeAt(0).cloneRange();
             range.collapse(false);
             range.insertNode(TempMarker.create());
 
+            // create a button at the marker position
             SnipButton.setPosition(TempMarker.getPosition());
             TempMarker.destroy();
         }
         else {
             SnipButton.destroy();
-            PanelSave.hide();
-            PanelShade.hide();
         }
     }
 
@@ -45,6 +54,9 @@ class SnipIt
         // overwrite behaviour for button click callback
         SnipButton.onButtonClick = this.onButtonClick.bind(this);
 
+        // overwrite behaviour for shade click callback
+        PanelShade.onClick = this.onHidePanels.bind(this);
+
         /*
         var pres = document.getElementsByTagName('pre');
         for (let i = 0, n = pres.length; i < n; i++) {
@@ -55,16 +67,28 @@ class SnipIt
         //*/
     }
 
-    // callback action
+    // things to do when the button is clicked
     onButtonClick() {
+        // first, remove the clicked button
+        SnipButton.destroy();
+
+        // get the selection and its text
         let selection = this.getSelection();
         let selectionText = this.getSelectionText( selection );
 
-        // TODO: do something useful with the selected text
         if (selectionText) {
+            // show a panel that will handle the selected text
+            this.isPanelOpen = true;
             PanelShade.show();
             PanelSave.show(selectionText);
         }
+    }
+
+    // hide plugin overlay & panels
+    onHidePanels() {
+        this.isPanelOpen = false;
+        PanelSave.hide();
+        PanelShade.hide();
     }
 }
 
