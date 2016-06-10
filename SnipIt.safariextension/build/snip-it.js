@@ -39,11 +39,6 @@ var SnipButton = function () {
                 btn.id = snipButtonId;
                 btn.appendChild(document.createTextNode(snipButtonText));
 
-                // style element
-                btn.style.border = "solid darkblue 1px";
-                btn.style.backgroundColor = "lightgoldenrodyellow";
-                btn.style.position = "absolute";
-
                 // attach behaviour
                 btn.onclick = this.onButtonClick;
 
@@ -119,6 +114,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var SnipIt = function () {
     function SnipIt() {
         _classCallCheck(this, SnipIt);
+
+        // by default, no panels are displayed
+        this.isPanelOpen = false;
     }
 
     _createClass(SnipIt, [{
@@ -131,27 +129,29 @@ var SnipIt = function () {
         value: function getSelectionText(selection) {
             return selection.toString().trim();
         }
-
-        // TODO: check if not inside the plugin's panel
-
     }, {
         key: "onMouseUp",
         value: function onMouseUp() {
+            // if a panel is open, do nothing
+            if (this.isPanelOpen) {
+                return;
+            }
+
+            // get the selection and its text
             var selection = this.getSelection();
             var selectionText = this.getSelectionText(selection);
 
             if (selectionText.length > 0) {
-
+                // insert a temporary marker
                 var range = selection.getRangeAt(0).cloneRange();
                 range.collapse(false);
                 range.insertNode(_TempMarker2.default.create());
 
+                // create a button at the marker position
                 _SnipButton2.default.setPosition(_TempMarker2.default.getPosition());
                 _TempMarker2.default.destroy();
             } else {
                 _SnipButton2.default.destroy();
-                _PanelSave2.default.hide();
-                _PanelShade2.default.hide();
             }
         }
     }, {
@@ -164,6 +164,9 @@ var SnipIt = function () {
             // overwrite behaviour for button click callback
             _SnipButton2.default.onButtonClick = this.onButtonClick.bind(this);
 
+            // overwrite behaviour for shade click callback
+            _PanelShade2.default.onClick = this.onHidePanels.bind(this);
+
             /*
             var pres = document.getElementsByTagName('pre');
             for (let i = 0, n = pres.length; i < n; i++) {
@@ -174,19 +177,34 @@ var SnipIt = function () {
             //*/
         }
 
-        // callback action
+        // things to do when the button is clicked
 
     }, {
         key: "onButtonClick",
         value: function onButtonClick() {
+            // first, remove the clicked button
+            _SnipButton2.default.destroy();
+
+            // get the selection and its text
             var selection = this.getSelection();
             var selectionText = this.getSelectionText(selection);
 
-            // TODO: do something useful with the selected text
             if (selectionText) {
+                // show a panel that will handle the selected text
+                this.isPanelOpen = true;
                 _PanelShade2.default.show();
                 _PanelSave2.default.show(selectionText);
             }
+        }
+
+        // hide plugin overlay & panels
+
+    }, {
+        key: "onHidePanels",
+        value: function onHidePanels() {
+            this.isPanelOpen = false;
+            _PanelSave2.default.hide();
+            _PanelShade2.default.hide();
         }
     }]);
 
@@ -293,19 +311,6 @@ var PanelSave = function () {
                 panel = document.createElement("div");
                 panel.id = panelSaveId;
 
-                // TODO: move the styles in a separate .css file and use a class
-                panel.style.display = 'none';
-                panel.style.position = 'fixed';
-                panel.style.zIndex = '99999';
-                panel.style.top = "50%";
-                panel.style.left = "50%";
-                panel.style.transform = "translate(-50%, -50%)";
-                panel.style.padding = "20px";
-                panel.style.backgroundColor = "#fff";
-                panel.style.boxShadow = "0 2px 3px rgba(0,0,0,0.3)";
-                panel.style.color = "#333";
-                panel.style.fontSize = "16px";
-
                 // add to document body
                 document.body.appendChild(panel);
             }
@@ -370,17 +375,8 @@ var PanelShade = function () {
                 shade = document.createElement("div");
                 shade.id = panelShadeId;
 
-                shade.style.display = 'none';
-                shade.style.position = 'fixed';
-                shade.style.zIndex = '99998';
-                shade.style.top = '0';
-                shade.style.left = '0';
-                shade.style.width = '100%';
-                shade.style.height = '100%';
-
-                shade.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
-                shade.style.webkitBackdropFilter = 'saturate(180%) blur(20px)';
-                shade.style.backdropFilter = 'saturate(180%) blur(20px)';
+                // attach click behaviour
+                shade.onclick = this.onClick;
 
                 // add to document body
                 document.body.appendChild(shade);
@@ -408,6 +404,11 @@ var PanelShade = function () {
             if (shade) {
                 shade.style.display = 'none';
             }
+        }
+    }, {
+        key: "onClick",
+        value: function onClick() {
+            // this should be overwritten with custom behaviour
         }
     }]);
 
