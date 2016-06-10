@@ -28,7 +28,14 @@ class PanelSave
         let panel = this.create();
 
         panel.style.display = 'block';
-        panel.innerHTML = `<pre>${text}</pre>`;
+        panel.innerHTML =
+`<div>
+      <div><strong>Title:</strong> ${document.title}</div>
+      <div><strong>URL:</strong> ${document.location.href}</div>
+      <div><strong>Code:</strong></div>
+      <pre>${text}</pre>
+      <button>Save!</button>
+</div>`;
     }
 
     hide() {

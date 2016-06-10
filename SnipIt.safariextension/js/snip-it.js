@@ -319,7 +319,7 @@ var PanelSave = function () {
             var panel = this.create();
 
             panel.style.display = 'block';
-            panel.innerHTML = "<pre>" + text + "</pre>";
+            panel.innerHTML = "<div>\n      <div><strong>Title:</strong> " + document.title + "</div>\n      <div><strong>URL:</strong> " + document.location.href + "</div>\n      <div><strong>Code:</strong></div>\n      <pre>" + text + "</pre>\n      <button>Save!</button>\n</div>";
         }
     }, {
         key: "hide",
