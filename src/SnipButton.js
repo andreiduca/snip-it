@@ -14,11 +14,6 @@ class SnipButton
             btn.id = snipButtonId;
             btn.appendChild(document.createTextNode(snipButtonText));
 
-            // style element
-            btn.style.border = "solid darkblue 1px";
-            btn.style.backgroundColor = "lightgoldenrodyellow";
-            btn.style.position = "absolute";
-
             // attach behaviour
             btn.onclick = this.onButtonClick;
 

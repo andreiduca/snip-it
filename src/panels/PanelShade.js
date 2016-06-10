@@ -11,17 +11,8 @@ class PanelShade
             shade = document.createElement("div");
             shade.id = panelShadeId;
 
-            shade.style.display = 'none';
-            shade.style.position = 'fixed';
-            shade.style.zIndex = '99998';
-            shade.style.top = '0';
-            shade.style.left = '0';
-            shade.style.width = '100%';
-            shade.style.height = '100%';
-
-            shade.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
-            shade.style.webkitBackdropFilter = 'saturate(180%) blur(20px)';
-            shade.style.backdropFilter = 'saturate(180%) blur(20px)';
+            // attach click behaviour
+            shade.onclick = this.onClick;
 
             // add to document body
             document.body.appendChild(shade);
@@ -46,6 +37,10 @@ class PanelShade
         if (shade) {
             shade.style.display = 'none';
         }
+    }
+
+    onClick() {
+        // this should be overwritten with custom behaviour
     }
 }
 
