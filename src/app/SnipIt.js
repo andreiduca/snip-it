@@ -14,7 +14,7 @@ class SnipIt
     }
 
     getSelection() {
-        return window.getSelection();
+        return this._window.getSelection();
     }
 
     getSelectionText(selection) {
@@ -46,13 +46,23 @@ class SnipIt
         }
     }
 
-    init() {
+    init(window, document) {
+        this._window = window;
+        this._document = document;
+
+        SnipButton.init(window, document);
+        TempMarker.init(window, document);
+
+        PanelShade.init(window, document);
+        PanelSave.init(window, document);
+
+
         // attach behaviour on global mouseUp
-        document.onmouseup = this.onMouseUp.bind(this);
+        this._document.onmouseup = this.onMouseUp.bind(this);
         //if (!document.all) document.captureEvents(Event.MOUSEUP);
 
         // overwrite behaviour for button click callback
-        SnipButton.onButtonClick = this.onButtonClick.bind(this);
+        SnipButton.onClick = this.onButtonClick.bind(this);
 
         // overwrite behaviour for shade click callback
         PanelShade.onClick = this.onHidePanels.bind(this);

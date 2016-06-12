@@ -2,4 +2,4 @@
 
 import SnipIt from "./app/SnipIt";
 
-SnipIt.init();
+SnipIt.init(window, document);

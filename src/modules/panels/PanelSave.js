@@ -1,51 +1,36 @@
 "use strict";
 
+import HTMLElement from "../HTMLElement";
+
 import HtmlEntities from "../../helpers/HtmlEntities";
 
 const panelSaveId = "snipItPanelSave";
 
-class PanelSave
+class PanelSave extends HTMLElement
 {
-
-    create() {
-        let panel = this.get();
-
-        if (!panel) {
-            // create element
-            panel = document.createElement("div");
-            panel.id = panelSaveId;
-
-            // add to document body
-            document.body.appendChild(panel);
-        }
-
-        return panel;
-    }
-
-    get() {
-        return document.getElementById(panelSaveId);
+    constructor() {
+        super("div", panelSaveId, false, true);
     }
 
     show(text = null) {
-        let panel = this.create();
+        let panel = super.show();
 
-        panel.style.display = 'block';
-        panel.innerHTML =
-`<div>
-      <div><strong>Title:</strong> ${document.title}</div>
-      <div><strong>URL:</strong> ${document.location.href}</div>
-      <div><strong>Code:</strong></div>
-      <pre>${HtmlEntities(text)}</pre>
-      <button>Save!</button>
-</div>`;
-    }
-
-    hide() {
-        let panel = this.get();
-
-        if (panel) {
-            panel.style.display = 'none';
-        }
+        panel.innerHTML =`
+            <div>
+                <form>
+                    <div>
+                        <label for="snipItTitle">Title:</label>
+                        <input type="text" name="snipItTitle" id="snipItTitle" value="${this._document.title}" autocomplete="off" />
+                    </div>
+                    <div>
+                        <strong>URL:</strong>
+                        ${this._document.location.href}
+                    </div>
+                    <div><strong>Code:</strong></div>
+                    <pre>${HtmlEntities(text)}</pre>
+                    <button>Save!</button>
+                </form>
+            </div>`;
     }
 }
 

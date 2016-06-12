@@ -1,24 +1,21 @@
 "use strict";
 
+import HTMLElement from "./HTMLElement";
+
 const tmpMarkerId = "snipItTemporaryMarker";
+const tmpMarkerText = "x";
 
-class TempMarker
+class TempMarker extends HTMLElement
 {
-    create() {
-        let marker = this.get();
-
-        if (!marker) {
-            // create element
-            marker = document.createElement("span");
-            marker.id = tmpMarkerId;
-            marker.appendChild(document.createTextNode("x"));
-        }
-
-        return marker;
+    constructor() {
+        super("span", tmpMarkerId, false, false);
     }
 
-    get() {
-        return document.getElementById(tmpMarkerId);
+    create() {
+        let marker = super.create();
+        marker.appendChild(this._document.createTextNode(tmpMarkerText));
+
+        return marker;
     }
 
     getPosition() {
@@ -35,14 +32,6 @@ class TempMarker
             top: top,
             left: left
         };
-    }
-
-    destroy() {
-        let marker = this.get();
-
-        if (marker) {
-            marker.parentNode.removeChild(marker);
-        }
     }
 }
 

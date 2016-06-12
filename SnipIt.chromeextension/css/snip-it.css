@@ -1,7 +1,8 @@
 #snipItButton {
+  position: absolute !important;
   border: solid darkblue 1px !important;
   background-color: lightgoldenrodyellow !important;
-  position: absolute !important; }
+  color: #333 !important; }
 
 #snipItPanelShade {
   display: none;
@@ -28,4 +29,5 @@
   background-color: #fff !important;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3) !important;
   color: #333 !important;
-  font-size: 16px !important; }
+  font-size: 16px !important;
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif !important; }

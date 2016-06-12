@@ -1,31 +1,21 @@
 "use strict";
 
+import HTMLElement from "./HTMLElement";
+
 const snipButtonId = "snipItButton";
 const snipButtonText = "Snip It!";
 
-class SnipButton
+class SnipButton extends HTMLElement
 {
-    create() {
-        let btn = this.get();
-
-        if (!btn) {
-            // create element
-            btn = document.createElement("button");
-            btn.id = snipButtonId;
-            btn.appendChild(document.createTextNode(snipButtonText));
-
-            // attach behaviour
-            btn.onclick = this.onButtonClick;
-
-            // add to document body
-            document.body.appendChild(btn);
-        }
-
-        return btn;
+    constructor() {
+        super("button", snipButtonId, true, true);
     }
 
-    get() {
-        return document.getElementById(snipButtonId);
+    create() {
+        let btn = super.create();
+        btn.innerText = snipButtonText;
+
+        return btn;
     }
 
     setPosition(position) {
@@ -33,18 +23,6 @@ class SnipButton
 
         btn.style.top = position.top + "px";
         btn.style.left = position.left + "px";
-    }
-
-    destroy() {
-        let btn = this.get();
-
-        if (btn) {
-            btn.parentNode.removeChild(btn);
-        }
-    }
-
-    onButtonClick() {
-        // this should be overwritten with custom behaviour
     }
 }
 
