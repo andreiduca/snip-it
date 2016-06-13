@@ -138,7 +138,7 @@ var SnipIt = function () {
 
 exports.default = new SnipIt();
 
-},{"../modules/SnipButton":4,"../modules/TempMarker":5,"../modules/panels/PanelSave":6,"../modules/panels/PanelShade":7}],2:[function(require,module,exports){
+},{"../modules/SnipButton":5,"../modules/TempMarker":6,"../modules/panels/PanelSave":7,"../modules/panels/PanelShade":8}],2:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -150,6 +150,32 @@ exports.default = function (htmlText) {
 };
 
 },{}],3:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+exports.default = function (document) {
+    var tags = [];
+
+    var relTags = document.querySelectorAll("[rel='tag']");
+    if (relTags.length) {
+        for (var i = 0, n = relTags.length; i < n; i++) {
+            var tag = relTags[i].innerText;
+
+            if (tags.indexOf(tag) > -1) {
+                continue;
+            }
+
+            tags.push(tag);
+        }
+    }
+
+    return tags;
+};
+
+},{}],4:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -249,7 +275,7 @@ var HTMLElement = function () {
 
 exports.default = HTMLElement;
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -307,7 +333,7 @@ var SnipButton = function (_HTMLElement) {
 
 exports.default = new SnipButton();
 
-},{"./HTMLElement":3}],5:[function(require,module,exports){
+},{"./HTMLElement":4}],6:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -374,7 +400,7 @@ var TempMarker = function (_HTMLElement) {
 
 exports.default = new TempMarker();
 
-},{"./HTMLElement":3}],6:[function(require,module,exports){
+},{"./HTMLElement":4}],7:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -392,6 +418,10 @@ var _HTMLElement3 = _interopRequireDefault(_HTMLElement2);
 var _HtmlEntities = require("../../helpers/HtmlEntities");
 
 var _HtmlEntities2 = _interopRequireDefault(_HtmlEntities);
+
+var _TagFinder = require("../../helpers/TagFinder");
+
+var _TagFinder2 = _interopRequireDefault(_TagFinder);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -419,12 +449,20 @@ var PanelSave = function (_HTMLElement) {
 
             var panel = _get(Object.getPrototypeOf(PanelSave.prototype), "show", this).call(this);
 
+            var tags = (0, _TagFinder2.default)(this._document);
+
+            if (tags.length) {
+                tags = tags.map(function (item) {
+                    return "<span class=\"snipItTag\">" + item + "</span>";
+                }).join(' ');
+            }
+
             panel.innerHTML = "\n            <div>\n                <form>\n                    <div>\n                        <label for=\"snipItTitle\">Title:</label>\n                        <input type=\"text\" name=\"snipItTitle\" id=\"snipItTitle\" value=\"" + this._document.title + "\" autocomplete=\"off\" />\n                    </div>" + (
             /*<div>
                 <label>URL:</label>
                 <a href="${this._document.location.href}" class="snipItPageUrl">${this._document.location.href}</a>
             </div>*/
-            "<div>\n                        <label class=\"snipItInlineLabel\">Language:</label>\n                        JavaScript\n                        <small>(detected; <a href=\"#!\">change</a>)</small>\n                    </div>\n                    <div>\n                        <label class=\"snipItInlineLabel\">Tags:</label>\n                        <span class=\"snipItTag\">javascript</span>\n                        <span class=\"snipItTag\">React</span>\n                        <span class=\"snipItTag\">ES6</span>\n                    </div>\n                    <div>\n                        <label for=\"snipItCodeBlock\">Code:</label>\n                        <textarea name=\"snipItCodeBlock\" id=\"snipItCodeBlock\" rows=\"10\" wrap=\"off\">" + (0, _HtmlEntities2.default)(text) + "</textarea>\n                    </div>\n                    <button>Save!</button>\n                </form>\n            </div>");
+            "<div>\n                        <label class=\"snipItInlineLabel\">Language:</label>\n                        JavaScript\n                        <small>(detected; <a href=\"#!\">change</a>)</small>\n                    </div>\n                    <div>\n                        <label class=\"snipItInlineLabel\">Tags:</label>\n                        " + tags + "\n                    </div>\n                    <div>\n                        <label for=\"snipItCodeBlock\">Code:</label>\n                        <textarea name=\"snipItCodeBlock\" id=\"snipItCodeBlock\" rows=\"10\" wrap=\"off\">" + (0, _HtmlEntities2.default)(text) + "</textarea>\n                    </div>\n                    <button>Save!</button>\n                </form>\n            </div>");
         }
     }]);
 
@@ -433,7 +471,7 @@ var PanelSave = function (_HTMLElement) {
 
 exports.default = new PanelSave();
 
-},{"../../helpers/HtmlEntities":2,"../HTMLElement":3}],7:[function(require,module,exports){
+},{"../../helpers/HtmlEntities":2,"../../helpers/TagFinder":3,"../HTMLElement":4}],8:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -468,7 +506,7 @@ var PanelShade = function (_HTMLElement) {
 
 exports.default = new PanelShade();
 
-},{"../HTMLElement":3}],8:[function(require,module,exports){
+},{"../HTMLElement":4}],9:[function(require,module,exports){
 "use strict";
 
 var _SnipIt = require("./app/SnipIt");
@@ -479,4 +517,4 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 _SnipIt2.default.init(window, document);
 
-},{"./app/SnipIt":1}]},{},[8]);
+},{"./app/SnipIt":1}]},{},[9]);

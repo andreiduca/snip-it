@@ -3,6 +3,7 @@
 import HTMLElement from "../HTMLElement";
 
 import HtmlEntities from "../../helpers/HtmlEntities";
+import TagFinder from "../../helpers/TagFinder";
 
 const panelSaveId = "snipItPanelSave";
 
@@ -14,6 +15,12 @@ class PanelSave extends HTMLElement
 
     show(text = null) {
         let panel = super.show();
+
+        let tags = TagFinder(this._document);
+
+        if (tags.length) {
+            tags = tags.map((item) => { return `<span class="snipItTag">${item}</span>`; }).join(' ');
+        }
 
         panel.innerHTML =`
             <div>
@@ -33,9 +40,7 @@ class PanelSave extends HTMLElement
                     </div>
                     <div>
                         <label class="snipItInlineLabel">Tags:</label>
-                        <span class="snipItTag">javascript</span>
-                        <span class="snipItTag">React</span>
-                        <span class="snipItTag">ES6</span>
+                        ${tags}
                     </div>
                     <div>
                         <label for="snipItCodeBlock">Code:</label>
