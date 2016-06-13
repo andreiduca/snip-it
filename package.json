@@ -10,7 +10,9 @@
     "build-safari-css": "./bin/build-safari-css",
     "build-chrome": "./bin/build-chrome",
     "build-chrome-js": "./bin/build-chrome-js",
-    "build-chrome-css": "./bin/build-chrome-css"
+    "build-chrome-css": "./bin/build-chrome-css",
+    "build-all-js": "npm run build-safari-js && npm run build-chrome-js",
+    "build-all-css": "npm run build-safari-css && npm run build-chrome-css"
   },
   "keywords": [
     "snip",

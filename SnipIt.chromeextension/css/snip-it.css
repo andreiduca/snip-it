@@ -1,5 +1,6 @@
 #snipItButton {
   position: absolute !important;
+  z-index: 99997 !important;
   border: solid darkblue 1px !important;
   background-color: lightgoldenrodyellow !important;
   color: #333 !important; }
@@ -17,6 +18,7 @@
   backdrop-filter: saturate(180%) blur(20px) !important; }
 
 #snipItPanelSave {
+  box-sizing: border-box !important;
   display: none;
   position: fixed !important;
   z-index: 99999 !important;
@@ -31,3 +33,45 @@
   color: #333 !important;
   font-size: 16px !important;
   font-family: Helvetica Neue, Helvetica, Arial, sans-serif !important; }
+  #snipItPanelSave .snipItPageUrl {
+    box-sizing: border-box !important;
+    display: block !important;
+    width: 100% !important;
+    overflow: hidden !important;
+    white-space: nowrap !important;
+    text-overflow: ellipsis !important;
+    color: #0074D9 !important;
+    text-decoration: underline !important;
+    font-size: 12px !important; }
+  #snipItPanelSave form > div {
+    padding-bottom: 1em !important; }
+  #snipItPanelSave label {
+    display: block !important;
+    width: 100% !important;
+    margin: 0 !important;
+    color: #333 !important;
+    font-size: 12px !important;
+    font-weight: bold !important;
+    text-transform: uppercase !important;
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif !important; }
+  #snipItPanelSave input[type="text"],
+  #snipItPanelSave textarea {
+    box-sizing: border-box !important;
+    display: block !important;
+    width: 100% !important;
+    padding: 8px 10px !important;
+    background: #fff !important;
+    border: 1px solid #c8ccd0 !important;
+    box-shadow: 0 1px 2px rgba(12, 13, 14, 0.1) inset !important;
+    color: #3b4045 !important;
+    font-size: 14px !important; }
+    #snipItPanelSave input[type="text"]:focus,
+    #snipItPanelSave textarea:focus {
+      outline: 0 !important;
+      border: 1px solid #0077cc !important; }
+  #snipItPanelSave input {
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif !important; }
+  #snipItPanelSave textarea {
+    overflow-x: scroll !important;
+    resize: vertical !important;
+    font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; }

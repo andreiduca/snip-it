@@ -23,11 +23,13 @@ class PanelSave extends HTMLElement
                         <input type="text" name="snipItTitle" id="snipItTitle" value="${this._document.title}" autocomplete="off" />
                     </div>
                     <div>
-                        <strong>URL:</strong>
-                        ${this._document.location.href}
+                        <label>URL:</label>
+                        <a href="${this._document.location.href}" class="snipItPageUrl">${this._document.location.href}</a>
                     </div>
-                    <div><strong>Code:</strong></div>
-                    <pre>${HtmlEntities(text)}</pre>
+                    <div>
+                        <label for="snipItCodeBlock">Code:</label>
+                        <textarea name="snipItCodeBlock" id="snipItCodeBlock" rows="10" wrap="off">${HtmlEntities(text)}</textarea>
+                    </div>
                     <button>Save!</button>
                 </form>
             </div>`;
