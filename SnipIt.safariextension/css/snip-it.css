@@ -26,6 +26,8 @@
   left: 50% !important;
   width: 720px !important;
   max-width: 90% !important;
+  max-height: 90% !important;
+  overflow-y: scroll !important;
   transform: translate(-50%, -50%) !important;
   padding: 20px !important;
   background-color: #fff !important;
@@ -40,9 +42,22 @@
     overflow: hidden !important;
     white-space: nowrap !important;
     text-overflow: ellipsis !important;
-    color: #0074D9 !important;
+    color: dodgerblue !important;
     text-decoration: underline !important;
     font-size: 12px !important; }
+  #snipItPanelSave .snipItTag {
+    display: inline-block !important;
+    padding: 4px 6px !important;
+    border: 1px solid dodgerblue !important;
+    border-radius: 6px !important;
+    font-size: 11px !important;
+    line-height: 1 !important;
+    vertical-align: middle !important; }
+    #snipItPanelSave .snipItTag::after {
+      content: "\00d7";
+      margin-left: .5em; }
+  #snipItPanelSave small {
+    font-size: 75% !important; }
   #snipItPanelSave form > div {
     padding-bottom: 1em !important; }
   #snipItPanelSave label {
@@ -54,6 +69,9 @@
     font-weight: bold !important;
     text-transform: uppercase !important;
     font-family: Helvetica Neue, Helvetica, Arial, sans-serif !important; }
+    #snipItPanelSave label.snipItInlineLabel {
+      display: inline-block !important;
+      width: auto !important; }
   #snipItPanelSave input[type="text"],
   #snipItPanelSave textarea {
     box-sizing: border-box !important;
@@ -68,7 +86,7 @@
     #snipItPanelSave input[type="text"]:focus,
     #snipItPanelSave textarea:focus {
       outline: 0 !important;
-      border: 1px solid #0077cc !important; }
+      border: 1px solid dodgerblue !important; }
   #snipItPanelSave input {
     font-family: Helvetica Neue, Helvetica, Arial, sans-serif !important; }
   #snipItPanelSave textarea {

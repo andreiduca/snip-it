@@ -419,7 +419,12 @@ var PanelSave = function (_HTMLElement) {
 
             var panel = _get(Object.getPrototypeOf(PanelSave.prototype), "show", this).call(this);
 
-            panel.innerHTML = "\n            <div>\n                <form>\n                    <div>\n                        <label for=\"snipItTitle\">Title:</label>\n                        <input type=\"text\" name=\"snipItTitle\" id=\"snipItTitle\" value=\"" + this._document.title + "\" autocomplete=\"off\" />\n                    </div>\n                    <div>\n                        <label>URL:</label>\n                        <a href=\"" + this._document.location.href + "\" class=\"snipItPageUrl\">" + this._document.location.href + "</a>\n                    </div>\n                    <div>\n                        <label for=\"snipItCodeBlock\">Code:</label>\n                        <textarea name=\"snipItCodeBlock\" id=\"snipItCodeBlock\" rows=\"10\" wrap=\"off\">" + (0, _HtmlEntities2.default)(text) + "</textarea>\n                    </div>\n                    <button>Save!</button>\n                </form>\n            </div>";
+            panel.innerHTML = "\n            <div>\n                <form>\n                    <div>\n                        <label for=\"snipItTitle\">Title:</label>\n                        <input type=\"text\" name=\"snipItTitle\" id=\"snipItTitle\" value=\"" + this._document.title + "\" autocomplete=\"off\" />\n                    </div>" + (
+            /*<div>
+                <label>URL:</label>
+                <a href="${this._document.location.href}" class="snipItPageUrl">${this._document.location.href}</a>
+            </div>*/
+            "<div>\n                        <label class=\"snipItInlineLabel\">Language:</label>\n                        JavaScript\n                        <small>(detected; <a href=\"#!\">change</a>)</small>\n                    </div>\n                    <div>\n                        <label class=\"snipItInlineLabel\">Tags:</label>\n                        <span class=\"snipItTag\">javascript</span>\n                        <span class=\"snipItTag\">React</span>\n                        <span class=\"snipItTag\">ES6</span>\n                    </div>\n                    <div>\n                        <label for=\"snipItCodeBlock\">Code:</label>\n                        <textarea name=\"snipItCodeBlock\" id=\"snipItCodeBlock\" rows=\"10\" wrap=\"off\">" + (0, _HtmlEntities2.default)(text) + "</textarea>\n                    </div>\n                    <button>Save!</button>\n                </form>\n            </div>");
         }
     }]);
 
