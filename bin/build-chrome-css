@@ -1,1 +1,1 @@
-node-sass scss/ -o SnipIt.chromeextension/css/
+node-sass scss/snip-it.scss | cleancss -o SnipIt.chromeextension/css/snip-it.css

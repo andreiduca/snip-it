@@ -1,1 +1,1 @@
-node-sass scss/ -o SnipIt.safariextension/css/
+node-sass scss/snip-it.scss | cleancss -o SnipIt.safariextension/css/snip-it.css
