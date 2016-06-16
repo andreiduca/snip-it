@@ -4,6 +4,7 @@ import HTMLElement from "../HTMLElement";
 
 import HtmlEntities from "../../helpers/HtmlEntities";
 import TagFinder from "../../helpers/TagFinder";
+import LanguageDetector from "../../helpers/LanguageDetector";
 
 const panelSaveId = "snipItPanelSave";
 
@@ -11,44 +12,102 @@ class PanelSave extends HTMLElement
 {
     constructor() {
         super("div", panelSaveId, false, true);
+
+        this.properties = {
+            text: null,
+            tags: [],
+            detectedLanguage: null
+        };
     }
 
     show(text = null) {
         let panel = super.show();
 
+        this.properties.text = text;
+
         let tags = TagFinder(this._document);
+        let detectedLanguage = null;
 
         if (tags.length) {
-            tags = tags.map((item) => { return `<span class="snipItTag">${item}</span>`; }).join(' ');
+            this.properties.tags = tags;
+
+            LanguageDetector.init(tags);
+            detectedLanguage = LanguageDetector.getLanguage();
+            this.properties.detectedLanguage = detectedLanguage;
         }
 
-        panel.innerHTML =`
+        this.draw(panel);
+    }
+
+    draw(panelElement) {
+        let panel = panelElement || this.get();
+
+        panel.innerHTML = this.HTMLPanel();
+        this.initControls();
+    }
+
+    initControls() {
+        let showSelectLanguage = this._document.getElementById("snipItPanelSaveShowSelectLanguage");
+        if (showSelectLanguage) {
+            showSelectLanguage.onclick = this.showSelectLanguage.bind(this);
+        }
+
+        let submitButton = this._document.getElementById("snipItPanelSaveSubmitButton");
+        if (submitButton) {
+            submitButton.onclick = this.submitPanelSave.bind(this);
+        }
+    }
+
+    HTMLPanel() {
+        return `
             <div>
                 <form>
                     <div>
-                        <label for="snipItTitle">Title:</label>
-                        <input type="text" name="snipItTitle" id="snipItTitle" value="${this._document.title}" autocomplete="off" />
-                    </div>`+
-                    /*<div>
-                        <label>URL:</label>
-                        <a href="${this._document.location.href}" class="snipItPageUrl">${this._document.location.href}</a>
-                    </div>*/
-                    `<div>
-                        <label class="snipItInlineLabel">Language:</label>
-                        JavaScript
-                        <small>(detected; <a href="#!">change</a>)</small>
+                        <label for="snipItPanelSaveTitle">Title:</label>
+                        <input type="text" name="snipItTitle" id="snipItPanelSaveTitle" value="${this._document.title}" autocomplete="off" />
+                    </div>
+                    <div>
+                        <label class="snipItInlineLabel" for="snipItPanelSaveSelectLanguage">Language:</label>
+                        ${ this.properties.detectedLanguage ? this.HTMLLanguageSuggest() : this.HTMLLanguageSelect() }
                     </div>
                     <div>
                         <label class="snipItInlineLabel">Tags:</label>
-                        ${tags}
+                        ${ this.properties.tags.map((item) => { return `<span class="snipItTag">${item}</span>`; }).join(' ') }
                     </div>
                     <div>
-                        <label for="snipItCodeBlock">Code:</label>
-                        <textarea name="snipItCodeBlock" id="snipItCodeBlock" rows="10" wrap="off">${HtmlEntities(text)}</textarea>
+                        <label for="snipItPanelSaveCodeBlock">Code:</label>
+                        <textarea name="snipItCodeBlock" id="snipItPanelSaveCodeBlock" rows="10" wrap="off">${HtmlEntities(this.properties.text)}</textarea>
                     </div>
-                    <button>Save!</button>
+                    <button type="button" id="snipItPanelSaveSubmitButton">Save!</button>
                 </form>
             </div>`;
+    }
+
+    HTMLLanguageSuggest() {
+        return `<span class="snipItTag">${this.properties.detectedLanguage}</span>
+                <small>(detected; <a href="#!" id="snipItPanelSaveShowSelectLanguage">change</a>)</small>`;
+    }
+
+    HTMLLanguageSelect() {
+        return `<select id="snipItPanelSaveSelectLanguage">
+                    ${ LanguageDetector.languages().map( (item, index) => {
+                        /*let selected = null;
+                         if (detectedLanguage && detectedLanguage == item) {
+                         selected = `selected="selected"`
+                         }*/
+                        return `<option value="${index+1}">${item}</option>`;
+                    }) }
+                </select>`;
+    }
+
+    showSelectLanguage() {
+        this.properties.detectedLanguage = null;
+        this.draw();
+        return false;
+    }
+
+    submitPanelSave() {
+        // TODO: implement the form submission
     }
 }
 
