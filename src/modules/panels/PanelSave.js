@@ -89,18 +89,22 @@ class PanelSave extends HTMLElement
     }
 
     HTMLLanguageSelect() {
+        let selected = this.properties.preselectedLanguage;
+        this.properties.preselectedLanguage = null;
+
         return `<select id="snipItPanelSaveSelectLanguage">
                     ${ LanguageDetector.languages().map( (item, index) => {
-                        /*let selected = null;
-                         if (detectedLanguage && detectedLanguage == item) {
-                         selected = `selected="selected"`
-                         }*/
-                        return `<option value="${index+1}">${item}</option>`;
+                        let isSelected = null
+                        if (selected == item) {
+                            isSelected = `selected="selected"`;
+                        }
+                        return `<option value="${index+1}" ${isSelected}>${item}</option>`;
                     }) }
                 </select>`;
     }
 
     showSelectLanguage() {
+        this.properties.preselectedLanguage = this.properties.detectedLanguage;
         this.properties.detectedLanguage = null;
         this.draw();
         return false;
