@@ -56,6 +56,13 @@ class PanelSave extends HTMLElement
         if (submitButton) {
             submitButton.onclick = this.submitPanelSave.bind(this);
         }
+
+        let codeBlock = this._document.getElementById("snipItPanelSaveCodeBlock");
+        if (codeBlock) {
+            codeBlock.onkeyup = codeBlock.onblur = () => {
+                this.properties.text = codeBlock.value;
+            };
+        }
     }
 
     HTMLPanel() {
