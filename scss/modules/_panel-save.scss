@@ -1,3 +1,4 @@
+$white: white;
 $blue: dodgerblue;
 
 #snipItPanelSave {
@@ -15,7 +16,7 @@ $blue: dodgerblue;
   transform: translate(-50%, -50%) !important;
 
   padding: 20px !important;
-  background-color: #fff !important;
+  background-color: $white !important;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3) !important;
 
   color: #333 !important;
@@ -47,9 +48,29 @@ $blue: dodgerblue;
     line-height: 1 !important;
     vertical-align: middle !important;
 
+    cursor: pointer !important;
+
     &::after {
       content: "\00d7"; // multiplication sign
-      margin-left: .5em;
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      margin-left: 3px;
+      line-height: 1 !important;
+      vertical-align: text-bottom !important;
+      text-align: center !important;
+      font-size: 10px !important;
+    }
+
+    &:hover{
+      background: $blue !important;
+      color: $white !important;
+
+      &::after {
+        color: $blue !important;
+        background: $white !important;
+        border-radius: 50% !important;
+      }
     }
   }
 
@@ -85,7 +106,7 @@ $blue: dodgerblue;
     width: 100% !important;
 
     padding: 8px 10px !important;
-    background: #fff !important;
+    background: $white !important;
     border: 1px solid #c8ccd0 !important;
     box-shadow: 0 1px 2px rgba(12, 13, 14, 0.1) inset !important;
 

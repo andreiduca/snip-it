@@ -52,6 +52,16 @@ class PanelSave extends HTMLElement
             showSelectLanguage.onclick = this.showSelectLanguage.bind(this);
         }
 
+        let tags = this._document.querySelectorAll("[id^=snipItPanelSaveTag_]");
+        if (tags.length) {
+            for (let i = 0, n = tags.length; i < n; i++) {
+                tags[i].onclick = () => {
+                    this.properties.tags.splice(i, 1);
+                    this.draw();
+                };
+            }
+        }
+
         let submitButton = this._document.getElementById("snipItPanelSaveSubmitButton");
         if (submitButton) {
             submitButton.onclick = this.submitPanelSave.bind(this);
@@ -65,6 +75,9 @@ class PanelSave extends HTMLElement
         }
     }
 
+    /**
+     * @returns {string}
+     */
     HTMLPanel() {
         return `
             <div>
@@ -79,7 +92,9 @@ class PanelSave extends HTMLElement
                     </div>
                     <div>
                         <label class="snipItInlineLabel">Tags:</label>
-                        ${ this.properties.tags.map((item) => { return `<span class="snipItTag">${item}</span>`; }).join(' ') }
+                        ${ this.properties.tags.map((item, index) => {
+                                return `<span class="snipItTag" id="snipItPanelSaveTag_${index}" title="Remove this tag">${item}</span>`;
+                            }).join(' ') }
                     </div>
                     <div>
                         <label for="snipItPanelSaveCodeBlock">Code:</label>
@@ -90,18 +105,24 @@ class PanelSave extends HTMLElement
             </div>`;
     }
 
+    /**
+     * @returns {string}
+     */
     HTMLLanguageSuggest() {
         return `<span class="snipItTag">${this.properties.detectedLanguage}</span>
                 <small>(detected; <a href="#!" id="snipItPanelSaveShowSelectLanguage">change</a>)</small>`;
     }
 
+    /**
+     * @returns {string}
+     */
     HTMLLanguageSelect() {
         let selected = this.properties.preselectedLanguage;
         this.properties.preselectedLanguage = null;
 
         return `<select id="snipItPanelSaveSelectLanguage">
                     ${ LanguageDetector.languages().map( (item, index) => {
-                        let isSelected = null
+                        let isSelected = null;
                         if (selected == item) {
                             isSelected = `selected="selected"`;
                         }
