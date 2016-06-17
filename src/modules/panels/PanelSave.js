@@ -14,6 +14,8 @@ class PanelSave extends HTMLElement
         super("div", panelSaveId, false, true);
 
         this.properties = {
+            title: null,
+            url: null,
             text: null,
             tags: [],
             detectedLanguage: null
@@ -23,6 +25,8 @@ class PanelSave extends HTMLElement
     show(text = null) {
         let panel = super.show();
 
+        this.properties.title = this._document.title;
+        this.properties.url = this._document.location.href;
         this.properties.text = text;
 
         let tags = TagFinder(this._document);
@@ -67,6 +71,20 @@ class PanelSave extends HTMLElement
             submitButton.onclick = this.submitPanelSave.bind(this);
         }
 
+        let title = this._document.getElementById("snipItPanelSaveTitle");
+        if (title) {
+            title.onkeyup = title.onblur = () => {
+                this.properties.title = title.value;
+            };
+        }
+
+        let languages = this._document.getElementById("snipItPanelSaveSelectLanguage");
+        if (languages) {
+            languages.onchange = () => {
+                this.properties.selectedLanguage = languages.value;
+            };
+        }
+
         let codeBlock = this._document.getElementById("snipItPanelSaveCodeBlock");
         if (codeBlock) {
             codeBlock.onkeyup = codeBlock.onblur = () => {
@@ -84,7 +102,7 @@ class PanelSave extends HTMLElement
                 <form>
                     <div>
                         <label for="snipItPanelSaveTitle">Title:</label>
-                        <input type="text" name="snipItTitle" id="snipItPanelSaveTitle" value="${this._document.title}" autocomplete="off" />
+                        <input type="text" name="snipItTitle" id="snipItPanelSaveTitle" value="${this.properties.title}" autocomplete="off" />
                     </div>
                     <div>
                         <label class="snipItInlineLabel" for="snipItPanelSaveSelectLanguage">Language:</label>
@@ -117,22 +135,19 @@ class PanelSave extends HTMLElement
      * @returns {string}
      */
     HTMLLanguageSelect() {
-        let selected = this.properties.preselectedLanguage;
-        this.properties.preselectedLanguage = null;
-
         return `<select id="snipItPanelSaveSelectLanguage">
-                    ${ LanguageDetector.languages().map( (item, index) => {
+                    ${ LanguageDetector.languages().map( (item) => {
                         let isSelected = null;
-                        if (selected == item) {
+                        if (this.properties.selectedLanguage == item) {
                             isSelected = `selected="selected"`;
                         }
-                        return `<option value="${index+1}" ${isSelected}>${item}</option>`;
+                        return `<option value="${item}" ${isSelected}>${item}</option>`;
                     }) }
                 </select>`;
     }
 
     showSelectLanguage() {
-        this.properties.preselectedLanguage = this.properties.detectedLanguage;
+        this.properties.selectedLanguage = this.properties.detectedLanguage;
         this.properties.detectedLanguage = null;
         this.draw();
         return false;
@@ -140,6 +155,15 @@ class PanelSave extends HTMLElement
 
     submitPanelSave() {
         // TODO: implement the form submission
+        let objectToSend = {
+            url: this.properties.url,
+            title: this.properties.title,
+            language: this.properties.selectedLanguage || this.properties.detectedLanguage,
+            tags: this.properties.tags,
+            code: this.properties.text
+        };
+
+        console.log(objectToSend);
     }
 }
 
