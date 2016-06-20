@@ -5,13 +5,24 @@
   "description": "",
   "version": "1.0",
 
+  "permissions": [
+    "http://127.0.0.1/*",
+    "http://localhost/*"
+  ],
+
+  "background": {
+    "scripts": ["js/background.js"],
+    "persistent": true
+  },
+
   "content_scripts": [{
     "matches": ["<all_urls>"],
-    "js": ["load.js"],
+    "js": ["js/snip-it.js"],
     "css": ["css/snip-it.css"]
   }],
 
   "web_accessible_resources": [
-    "js/snip-it.js"
+    "js/snip-it.js",
+    "css/snip-it.css"
   ]
 }

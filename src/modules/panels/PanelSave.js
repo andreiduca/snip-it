@@ -154,7 +154,6 @@ class PanelSave extends HTMLElement
     }
 
     submitPanelSave() {
-        // TODO: implement the form submission
         let objectToSend = {
             url: this.properties.url,
             title: this.properties.title,
@@ -163,7 +162,19 @@ class PanelSave extends HTMLElement
             code: this.properties.text
         };
 
-        console.log(objectToSend);
+        // bind onSave to vendor callback method at xhr success response
+        this._vendor.callbackProxy = this.onSave.bind(this);
+
+        // send the xhr request through vendor's proxy
+        this._vendor.sendXHR({
+            type: 'post',
+            url: '/save',
+            data: objectToSend
+        });
+    }
+
+    onSave(response) {
+        console.log("YAY, ajax done!", response);
     }
 }
 

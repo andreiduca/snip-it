@@ -46,15 +46,16 @@ class SnipIt
         }
     }
 
-    init(window, document) {
+    init({window, document, vendor}) {
         this._window = window;
         this._document = document;
+        this._vendor = vendor;
 
-        SnipButton.init(window, document);
-        TempMarker.init(window, document);
+        SnipButton.init({window, document});
+        TempMarker.init({window, document});
 
-        PanelShade.init(window, document);
-        PanelSave.init(window, document);
+        PanelShade.init({window, document});
+        PanelSave.init({window, document, vendor});
 
 
         // attach behaviour on global mouseUp
