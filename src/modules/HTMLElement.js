@@ -8,12 +8,10 @@ export default class HTMLElement
         this._attachToDocumentBody = attachToDocumentBody;
     }
 
-    init({window, document, vendor}) {
+    init({window, document}) {
         // injected dependencies
         this._window = window;
         this._document = document;
-
-        this._vendor = vendor || null;
     }
 
 

@@ -5,6 +5,7 @@ import HTMLElement from "../HTMLElement";
 import HtmlEntities from "../../helpers/HtmlEntities";
 import TagFinder from "../../helpers/TagFinder";
 import LanguageDetector from "../../helpers/LanguageDetector";
+import XHR from "../../helpers/XHR";
 
 const panelSaveId = "snipItPanelSave";
 
@@ -162,19 +163,13 @@ class PanelSave extends HTMLElement
             code: this.properties.text
         };
 
-        // bind onSave to vendor callback method at xhr success response
-        this._vendor.callbackProxy = this.onSave.bind(this);
-
-        // send the xhr request through vendor's proxy
-        this._vendor.sendXHR({
-            type: 'post',
+        XHR.post({
             url: '/save',
-            data: objectToSend
+            data: objectToSend,
+            onSuccess: (response) => {
+                console.log("YAY, ajax done!", response);
+            }
         });
-    }
-
-    onSave(response) {
-        console.log("YAY, ajax done!", response);
     }
 }
 

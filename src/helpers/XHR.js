@@ -6,6 +6,7 @@ class XHR
 {
     constructor() {
         this.xhr = new XMLHttpRequest();
+        this.backend = 'http://localhost:3000';
     }
 
     setBackendPath(path) {
