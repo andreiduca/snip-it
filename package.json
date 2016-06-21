@@ -3,14 +3,32 @@
   "version": "1.0.0",
   "description": "A browser extension to snip code blocks and text selections from web pages. The tools lets you save and organize your code snippets in the cloud.",
   "main": "index.js",
+  "config": {
+    "environment": "production"
+  },
   "scripts": {
-    "build": "./bin/build",
-    "build-safari": "./bin/build-safari",
-    "build-safari-js": "./bin/build-safari-js",
-    "build-safari-css": "./bin/build-safari-css",
-    "build-chrome": "./bin/build-chrome",
-    "build-chrome-js": "./bin/build-chrome-js",
-    "build-chrome-css": "./bin/build-chrome-css",
+    "build": "npm run build-safari && npm run build-chrome",
+    "build:dev": "npm run build-safari:dev && npm run build-chrome:dev",
+    "build:test": "npm run build-safari:test && npm run build-chrome:test",
+
+    "build-safari": "npm run build-safari-js && npm run build-safari-css",
+    "build-safari:dev": "npm run build-safari-js:dev && npm run build-safari-css",
+    "build-safari:test": "npm run build-safari-js:test && npm run build-safari-css",
+
+    "build-safari-js": "browserify src/snip-it.js -t babelify -t [ envify --NODE_ENV $npm_package_config_environment ] | uglifyjs --compress --screw-ie8 -o SnipIt.safariextension/js/snip-it.js",
+    "build-safari-js:dev": "npm run build-safari-js --snip-it:environment=development",
+    "build-safari-js:test": "npm run build-safari-js --snip-it:environment=test",
+    "build-safari-css": "node-sass scss/snip-it.scss | cleancss -o SnipIt.safariextension/css/snip-it.css",
+
+    "build-chrome": "npm run build-chrome-js && npm run build-chrome-css",
+    "build-chrome:dev": "npm run build-chrome-js:dev && npm run build-chrome-css",
+    "build-chrome:test": "npm run build-chrome-js:test && npm run build-chrome-css",
+
+    "build-chrome-js": "browserify src/snip-it.js -t babelify -t [ envify --NODE_ENV $npm_package_config_environment ] | uglifyjs --compress --screw-ie8 -o SnipIt.chromeextension/js/snip-it.js",
+    "build-chrome-js:dev": "npm run build-chrome-js --snip-it:environment=development",
+    "build-chrome-js:test": "npm run build-chrome-js --snip-it:environment=test",
+    "build-chrome-css": "node-sass scss/snip-it.scss | cleancss -o SnipIt.chromeextension/css/snip-it.css",
+
     "build-all-js": "npm run build-safari-js && npm run build-chrome-js",
     "build-all-css": "npm run build-safari-css && npm run build-chrome-css",
     "check": "jslint --edition=latest src/*.js || true"
@@ -37,6 +55,7 @@
     "babelify": "7.3.0",
     "browserify": "13.0.1",
     "clean-css": "3.4.18",
+    "envify": "3.4.1",
     "jslint": "0.10.1",
     "node-sass": "3.7.0",
     "querystring": "0.2.0",

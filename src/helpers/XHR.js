@@ -1,16 +1,13 @@
 "use strict";
 
 import querystring from "querystring";
+import AppConfig from "../config/index";
 
 class XHR
 {
     constructor() {
         this.xhr = new XMLHttpRequest();
-        this.backend = 'http://localhost:3000';
-    }
-
-    setBackendPath(path) {
-        this.backend = path;
+        this.backend = AppConfig.api;
     }
 
     send({type = 'get', url, data, onSuccess, onFail}) {
