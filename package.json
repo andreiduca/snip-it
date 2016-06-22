@@ -29,8 +29,6 @@
     "build-chrome-js:test": "npm run build-chrome-js --snip-it:environment=test",
     "build-chrome-css": "node-sass scss/snip-it.scss | cleancss -o SnipIt.chromeextension/css/snip-it.css",
 
-    "build-all-js": "npm run build-safari-js && npm run build-chrome-js",
-    "build-all-css": "npm run build-safari-css && npm run build-chrome-css",
     "check": "jslint --edition=latest src/*.js || true"
   },
   "keywords": [
@@ -58,7 +56,6 @@
     "envify": "3.4.1",
     "jslint": "0.10.1",
     "node-sass": "3.7.0",
-    "querystring": "0.2.0",
     "uglify-js": "2.6.2"
   }
 }

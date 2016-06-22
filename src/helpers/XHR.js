@@ -1,6 +1,5 @@
 "use strict";
 
-import querystring from "querystring";
 import AppConfig from "../config/index";
 
 class XHR
@@ -16,9 +15,8 @@ class XHR
 
         this.xhr.open(type.toUpperCase(), APIUrl, true);
 
-        // this.xhr.setRequestHeader('Content-type', 'application/json');
-        // this.xhr.setRequestHeader('Accept', 'application/json');
-        this.xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        this.xhr.setRequestHeader('Content-type', 'application/json');
+        this.xhr.setRequestHeader('Accept', 'application/json');
 
         this.xhr.onerror = () => {
             if (typeof onFail === 'function') {
@@ -35,7 +33,7 @@ class XHR
             }
         };
 
-        this.xhr.send(querystring.encode(data));
+        this.xhr.send(JSON.stringify(data));
     }
 
     get({url, data, onSuccess = null, onFail = null}) {
