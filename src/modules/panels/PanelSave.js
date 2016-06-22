@@ -184,7 +184,7 @@ class PanelSave extends HTMLElement
         this.draw();
 
         XHR.post({
-            url: '/save',
+            url: '/snippets/save',
             data: objectToSend,
             onSuccess: (response) => {
                 this.waitingXHR = false;
