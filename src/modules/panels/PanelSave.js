@@ -21,6 +21,8 @@ class PanelSave extends HTMLElement
             tags: [],
             detectedLanguage: null
         };
+
+        this.waitingXHR = false;
     }
 
     show(text = null) {
@@ -67,9 +69,11 @@ class PanelSave extends HTMLElement
             }
         }
 
-        let submitButton = this._document.getElementById("snipItPanelSaveSubmitButton");
-        if (submitButton) {
-            submitButton.onclick = this.submitPanelSave.bind(this);
+        if (!this.waitingXHR) {
+            let submitButton = this._document.getElementById("snipItPanelSaveSubmitButton");
+            if (submitButton) {
+                submitButton.onclick = this.submitPanelSave.bind(this);
+            }
         }
 
         let title = this._document.getElementById("snipItPanelSaveTitle");
@@ -119,7 +123,7 @@ class PanelSave extends HTMLElement
                         <label for="snipItPanelSaveCodeBlock">Code:</label>
                         <textarea name="snipItCodeBlock" id="snipItPanelSaveCodeBlock" rows="10" wrap="off">${HtmlEntities(this.properties.text)}</textarea>
                     </div>
-                    <button type="button" id="snipItPanelSaveSubmitButton">Save!</button>
+                    ${ this.HTMLButton() }
                 </form>
             </div>`;
     }
@@ -147,6 +151,19 @@ class PanelSave extends HTMLElement
                 </select>`;
     }
 
+    HTMLButton() {
+        return `<button type="button" id="snipItPanelSaveSubmitButton">
+                    ${ !this.waitingXHR ? "Save!" :
+                        `<div class="snipit-spinner">
+                          <div class="rect1"></div>
+                          <div class="rect2"></div>
+                          <div class="rect3"></div>
+                          <div class="rect4"></div>
+                          <div class="rect5"></div>
+                        </div>` }
+                </button>`;
+    }
+
     showSelectLanguage() {
         this.properties.selectedLanguage = this.properties.detectedLanguage;
         this.properties.detectedLanguage = null;
@@ -163,11 +180,21 @@ class PanelSave extends HTMLElement
             code: this.properties.text
         };
 
+        this.waitingXHR = true;
+        this.draw();
+
         XHR.post({
             url: '/save',
             data: objectToSend,
             onSuccess: (response) => {
+                this.waitingXHR = false;
+                this.draw();
                 console.log("YAY, ajax done!", response);
+            },
+            onFail: () => {
+                this.waitingXHR = false;
+                this.draw();
+                console.log("bad happened :(");
             }
         });
     }
