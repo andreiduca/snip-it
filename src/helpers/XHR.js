@@ -27,7 +27,7 @@ class XHR
         this.xhr.onload = () => {
             if (this.xhr.status >= 200 && this.xhr.status < 300) {
                 if (typeof onSuccess === 'function') {
-                    onSuccess(this.xhr.response);
+                    onSuccess(JSON.parse(this.xhr.response));
                 }
             } else {
             }

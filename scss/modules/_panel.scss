@@ -1,0 +1,24 @@
+@import "../helpers/colors";
+
+.snipItPanel {
+  box-sizing: border-box !important;
+  display: none;
+  position: fixed !important;
+  z-index: 99999 !important;
+
+  top: 50% !important;
+  left: 50% !important;
+  width: 720px !important;
+  max-width: 90% !important;
+  max-height: 90% !important;
+  overflow-y: scroll !important;
+  transform: translate(-50%, -50%) !important;
+
+  padding: 20px !important;
+  background-color: $white !important;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3) !important;
+
+  color: $dark !important;
+  font-size: 16px !important;
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif !important;
+}

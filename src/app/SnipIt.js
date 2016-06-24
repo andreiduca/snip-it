@@ -4,13 +4,19 @@ import SnipButton from "../modules/SnipButton";
 import TempMarker from "../modules/TempMarker";
 
 import PanelShade from "../modules/panels/PanelShade";
+import PanelLogin from "../modules/panels/PanelLogin";
 import PanelSave from "../modules/panels/PanelSave";
+
+import XHR from "../helpers/XHR";
 
 class SnipIt
 {
     constructor() {
         // by default, no panels are displayed
         this.isPanelOpen = false;
+        this.isUserLoggedIn = null;
+
+        this.tempSelectedText = null;
     }
 
     getSelection() {
@@ -54,6 +60,7 @@ class SnipIt
         TempMarker.init({window, document});
 
         PanelShade.init({window, document});
+        PanelLogin.init({window, document});
         PanelSave.init({window, document});
 
 
@@ -66,6 +73,21 @@ class SnipIt
 
         // overwrite behaviour for shade click callback
         PanelShade.onClick = this.onHidePanels.bind(this);
+
+        PanelLogin.loginWindowClose = this.onLoginAttempt.bind(this);
+
+        // check if user is logged in or not
+        if (this.isUserLoggedIn === null) {
+            XHR.get({
+                url: '/auth',
+                onSuccess: (response) => {
+                    this.isUserLoggedIn = response.auth || false;
+                },
+                onFail: () => {
+                    this.isUserLoggedIn = false;
+                }
+            });
+        }
 
         /*
         var pres = document.getElementsByTagName('pre');
@@ -86,11 +108,30 @@ class SnipIt
         let selection = this.getSelection();
         let selectionText = this.getSelectionText( selection );
 
+        // temporary save the selected text
         if (selectionText) {
-            // show a panel that will handle the selected text
+            this.tempSelectedText = selectionText;
+        }
+        // restore temporary saved selected text
+        else if (this.tempSelectedText) {
+            selectionText = this.tempSelectedText;
+        }
+
+        if (this.isUserLoggedIn) {
+            if (selectionText) {
+                // show a panel that will handle the selected text
+                this.isPanelOpen = true;
+                PanelShade.show();
+                PanelSave.show(selectionText);
+
+                // clear temporary selected text
+                this.tempSelectedText = null
+            }
+        }
+        else {
             this.isPanelOpen = true;
             PanelShade.show();
-            PanelSave.show(selectionText);
+            PanelLogin.show();
         }
     }
 
@@ -99,6 +140,22 @@ class SnipIt
         this.isPanelOpen = false;
         PanelSave.hide();
         PanelShade.hide();
+    }
+
+    onLoginAttempt() {
+        XHR.get({
+            url: '/auth',
+            onSuccess: (response) => {
+                this.isUserLoggedIn = response.auth || false;
+                if (this.isUserLoggedIn) {
+                    PanelLogin.destroy();
+                }
+                this.onButtonClick();
+            },
+            onFail: () => {
+                this.isUserLoggedIn = false;
+            }
+        });
     }
 }
 

@@ -24,6 +24,12 @@ class PanelSave extends HTMLElement
 
         this.waitingXHR = false;
     }
+    
+    create() {
+        let panel = super.create();
+        panel.className = "snipItPanel";
+        return panel;
+    }
 
     show(text = null) {
         let panel = super.show();
