@@ -139,6 +139,7 @@ class SnipIt
     onHidePanels() {
         this.isPanelOpen = false;
         PanelSave.hide();
+        PanelLogin.hide();
         PanelShade.hide();
     }
 

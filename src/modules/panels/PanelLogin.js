@@ -34,6 +34,11 @@ class PanelLogin extends HTMLElement
         if (loginGoogleButton) {
             loginGoogleButton.onclick = this.loginWithGoogle.bind(this);
         }
+
+        let loginGithubButton = this._document.getElementById("snipItPanelLoginGithub");
+        if (loginGithubButton) {
+            loginGithubButton.onclick = this.loginWithGithub.bind(this);
+        }
     }
 
     /**
@@ -44,11 +49,17 @@ class PanelLogin extends HTMLElement
             <div>
                 <h1>Login with</h1>
                 <button type="button" id="snipItPanelLoginGoogle">Google</button>
+                <button type="button" id="snipItPanelLoginGithub">Github</button>
             </div>`;
     }
 
     loginWithGoogle() {
         var loginWindow = this._window.open(config.api + '/auth/google');
+        loginWindow.onunload = this.loginWindowClose;
+    }
+
+    loginWithGithub() {
+        var loginWindow = this._window.open(config.api + '/auth/github');
         loginWindow.onunload = this.loginWindowClose;
     }
 
