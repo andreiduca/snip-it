@@ -6,6 +6,7 @@ import TempMarker from "../modules/TempMarker";
 import PanelShade from "../modules/panels/PanelShade";
 import PanelLogin from "../modules/panels/PanelLogin";
 import PanelSave from "../modules/panels/PanelSave";
+import PanelSaveDone from "../modules/panels/PanelSaveDone";
 
 import XHR from "../helpers/XHR";
 
@@ -62,11 +63,11 @@ class SnipIt
         PanelShade.init({window, document});
         PanelLogin.init({window, document});
         PanelSave.init({window, document});
+        PanelSaveDone.init({window, document});
 
 
         // attach behaviour on global mouseUp
         this._document.onmouseup = this.onMouseUp.bind(this);
-        //if (!document.all) document.captureEvents(Event.MOUSEUP);
 
         // overwrite behaviour for button click callback
         SnipButton.onClick = this.authShowPanels.bind(this);
@@ -74,17 +75,11 @@ class SnipIt
         // overwrite behaviour for shade click callback
         PanelShade.onClick = this.hidePanels.bind(this);
 
+        // bind behaviour of components to methods defined here
         PanelLogin.loginWindowClose = this.authShowPanels.bind(this);
+        PanelSave.onSaveSuccess = this.saveSuccess.bind(this);
         PanelSave.onUnauthorized = this.authShowPanels.bind(this);
-
-        /*
-        var pres = document.getElementsByTagName('pre');
-        for (let i = 0, n = pres.length; i < n; i++) {
-            var btn = document.createElement("button");
-            btn.appendChild(document.createTextNode("Press me!"));
-            pres[i].parentNode.insertBefore(btn, pres[i].nextSibling);
-        }
-        //*/
+        PanelSaveDone.closePanel = this.hidePanels.bind(this);
     }
 
     // things to do when the button is clicked
@@ -129,6 +124,7 @@ class SnipIt
     hidePanels() {
         this.isPanelOpen = false;
         PanelSave.hide();
+        PanelSaveDone.hide();
         PanelLogin.hide();
         PanelShade.hide();
     }
@@ -145,6 +141,12 @@ class SnipIt
                 this.displayPanels();
             }
         });
+    }
+
+    saveSuccess() {
+        this.hidePanels();
+        PanelShade.show();
+        PanelSaveDone.show();
     }
 }
 
