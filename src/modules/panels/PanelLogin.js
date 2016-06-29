@@ -1,7 +1,7 @@
 "use strict";
 
 import HTMLElement from "../HTMLElement";
-import config from "../../config";
+import AppConfig from "../../config";
 
 const panelLoginId = "snipItPanelLogin";
 
@@ -54,12 +54,12 @@ class PanelLogin extends HTMLElement
     }
 
     loginWithGoogle() {
-        var loginWindow = this._window.open(config.api + '/auth/google');
+        var loginWindow = this._window.open(AppConfig.api.baseURL + '/auth/google');
         loginWindow.onunload = this.loginWindowClose;
     }
 
     loginWithGithub() {
-        var loginWindow = this._window.open(config.api + '/auth/github');
+        var loginWindow = this._window.open(AppConfig.api.baseURL + '/auth/github');
         loginWindow.onunload = this.loginWindowClose;
     }
 

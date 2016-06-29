@@ -69,25 +69,13 @@ class SnipIt
         //if (!document.all) document.captureEvents(Event.MOUSEUP);
 
         // overwrite behaviour for button click callback
-        SnipButton.onClick = this.onButtonClick.bind(this);
+        SnipButton.onClick = this.authShowPanels.bind(this);
 
         // overwrite behaviour for shade click callback
-        PanelShade.onClick = this.onHidePanels.bind(this);
+        PanelShade.onClick = this.hidePanels.bind(this);
 
-        PanelLogin.loginWindowClose = this.onLoginAttempt.bind(this);
-
-        // check if user is logged in or not
-        if (this.isUserLoggedIn === null) {
-            XHR.get({
-                url: '/auth',
-                onSuccess: (response) => {
-                    this.isUserLoggedIn = response.auth || false;
-                },
-                onFail: () => {
-                    this.isUserLoggedIn = false;
-                }
-            });
-        }
+        PanelLogin.loginWindowClose = this.authShowPanels.bind(this);
+        PanelSave.onUnauthorized = this.authShowPanels.bind(this);
 
         /*
         var pres = document.getElementsByTagName('pre');
@@ -100,9 +88,11 @@ class SnipIt
     }
 
     // things to do when the button is clicked
-    onButtonClick() {
+    displayPanels() {
         // first, remove the clicked button
         SnipButton.destroy();
+
+        this.hidePanels();
 
         // get the selection and its text
         let selection = this.getSelection();
@@ -136,25 +126,23 @@ class SnipIt
     }
 
     // hide plugin overlay & panels
-    onHidePanels() {
+    hidePanels() {
         this.isPanelOpen = false;
         PanelSave.hide();
         PanelLogin.hide();
         PanelShade.hide();
     }
 
-    onLoginAttempt() {
+    authShowPanels() {
         XHR.get({
             url: '/auth',
             onSuccess: (response) => {
                 this.isUserLoggedIn = response.auth || false;
-                if (this.isUserLoggedIn) {
-                    PanelLogin.destroy();
-                }
-                this.onButtonClick();
+                this.displayPanels();
             },
             onFail: () => {
                 this.isUserLoggedIn = false;
+                this.displayPanels();
             }
         });
     }

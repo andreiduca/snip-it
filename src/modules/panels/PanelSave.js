@@ -24,7 +24,7 @@ class PanelSave extends HTMLElement
 
         this.waitingXHR = false;
     }
-    
+
     create() {
         let panel = super.create();
         panel.className = "snipItPanel";
@@ -195,14 +195,22 @@ class PanelSave extends HTMLElement
             onSuccess: (response) => {
                 this.waitingXHR = false;
                 this.draw();
-                console.log("YAY, ajax done!", response);
+                this.onSaveSuccess(response);
             },
             onFail: () => {
                 this.waitingXHR = false;
                 this.draw();
-                console.log("bad happened :(");
+                this.onUnauthorized();
             }
         });
+    }
+
+    onSaveSuccess(response) {
+        console.log("YAY, ajax done!", response);
+    }
+
+    onUnauthorized() {
+        console.log("bad happened :(");
     }
 }
 

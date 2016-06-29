@@ -4,36 +4,35 @@ import AppConfig from "../config/index";
 
 class XHR
 {
-    constructor() {
-        this.xhr = new XMLHttpRequest();
-        this.backend = AppConfig.api;
-    }
-
     send({type = 'get', url, data, onSuccess, onFail}) {
 
-        let APIUrl = (this.backend || '') + url;
+        let xhr = new XMLHttpRequest();
+        let APIUrl = (AppConfig.api.baseURL || '') + url;
 
-        this.xhr.open(type.toUpperCase(), APIUrl, true);
+        xhr.open(type.toUpperCase(), APIUrl, true);
 
-        this.xhr.setRequestHeader('Content-type', 'application/json');
-        this.xhr.setRequestHeader('Accept', 'application/json');
+        xhr.setRequestHeader('Content-type', 'application/json');
+        xhr.setRequestHeader('Accept', 'application/json');
 
-        this.xhr.onerror = () => {
-            if (typeof onFail === 'function') {
-                onFail();
+        xhr.onerror = () => {
+            if (typeof onFail === 'function') { onFail(); }
+        };
+
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState == XMLHttpRequest.HEADERS_RECEIVED && xhr.status >= 400) {
+                if (typeof onFail === 'function') { onFail(); }
             }
         };
 
-        this.xhr.onload = () => {
-            if (this.xhr.status >= 200 && this.xhr.status < 300) {
+        xhr.onload = () => {
+            if (xhr.status >= 200 && xhr.status < 300) {
                 if (typeof onSuccess === 'function') {
-                    onSuccess(JSON.parse(this.xhr.response));
+                    onSuccess(JSON.parse(xhr.response));
                 }
-            } else {
             }
         };
 
-        this.xhr.send(JSON.stringify(data));
+        xhr.send(JSON.stringify(data));
     }
 
     get({url, data, onSuccess = null, onFail = null}) {

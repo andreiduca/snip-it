@@ -1,3 +1,5 @@
 module.exports = {
-    api: 'http://192.168.99.100:3000'
+    api: {
+        baseURL: 'http://192.168.99.100:3000'
+    }
 };

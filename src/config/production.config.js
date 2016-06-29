@@ -1,3 +1,5 @@
 module.exports = {
-    api: ''
+    api: {
+        baseURL: ''
+    }
 };
