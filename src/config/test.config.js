@@ -1,5 +1,5 @@
 module.exports = {
     api: {
-        baseURL: 'http://192.168.99.100:3000'
+        baseURL: 'http://snipit.dev:3000/api'
     }
 };
