@@ -19,9 +19,12 @@ class PanelSave extends HTMLElement
             url: null,
             text: null,
             tags: [],
+            selectedCategory: null,
+            selectedLanguage: null,
             detectedLanguage: null
         };
 
+        this.userCategories = [];
         this.waitingXHR = false;
     }
 
@@ -89,6 +92,13 @@ class PanelSave extends HTMLElement
             };
         }
 
+        let categories = this._document.getElementById("snipItPanelSaveSelectCategory");
+        if (categories) {
+            categories.onchange = () => {
+                this.properties.selectedCategory = categories.value;
+            };
+        }
+
         let languages = this._document.getElementById("snipItPanelSaveSelectLanguage");
         if (languages) {
             languages.onchange = () => {
@@ -116,6 +126,10 @@ class PanelSave extends HTMLElement
                         <input type="text" name="snipItTitle" id="snipItPanelSaveTitle" value="${this.properties.title}" autocomplete="off" />
                     </div>
                     <div>
+                        <label class="snipItInlineLabel" for="snipItPanelSaveSelectCategory">Category:</label>
+                        ${ this.HTMLCategorySelect() }
+                    </div>
+                    <div>
                         <label class="snipItInlineLabel" for="snipItPanelSaveSelectLanguage">Language:</label>
                         ${ this.properties.detectedLanguage ? this.HTMLLanguageSuggest() : this.HTMLLanguageSelect() }
                     </div>
@@ -140,6 +154,18 @@ class PanelSave extends HTMLElement
     HTMLLanguageSuggest() {
         return `<span class="snipItTag">${this.properties.detectedLanguage}</span>
                 <small>(detected; <a href="#!" id="snipItPanelSaveShowSelectLanguage">change</a>)</small>`;
+    }
+
+    /**
+     * @returns {string}
+     */
+    HTMLCategorySelect() {
+        return `<select id="snipItPanelSaveSelectCategory">
+                    <option value="">no category</option>
+                    ${ this.userCategories.map( (item) => {
+                        return `<option value="${item.id}">${item.name}</option>`;
+                    }) }
+                </select>`;
     }
 
     /**
@@ -177,10 +203,21 @@ class PanelSave extends HTMLElement
         return false;
     }
 
+    getUserCategories() {
+        XHR.get({
+            url: '/categories/all',
+            onSuccess: (response) => {
+                this.userCategories = response.categories || [];
+                this.draw();
+            }
+        });
+    }
+
     submitPanelSave() {
         let objectToSend = {
             url: this.properties.url,
             title: this.properties.title,
+            category_id: this.properties.selectedCategory || null,
             language: this.properties.selectedLanguage || this.properties.detectedLanguage,
             tags: this.properties.tags,
             code: this.properties.text

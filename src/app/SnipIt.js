@@ -134,6 +134,9 @@ class SnipIt
             url: '/auth',
             onSuccess: (response) => {
                 this.isUserLoggedIn = response.auth || false;
+                if (this.isUserLoggedIn) {
+                    PanelSave.getUserCategories();
+                }
                 this.displayPanels();
             },
             onFail: () => {
