@@ -28,9 +28,14 @@ class SnipIt
         return selection.toString().trim();
     }
 
-    onMouseUp() {
+    onMouseUp(event) {
         // if a panel is open, do nothing
         if (this.isPanelOpen) {
+            return;
+        }
+        // if selection is on the following elements, do nothing
+        // TODO: configure these values in extension options panel
+        if (['input', 'textarea', 'form'].indexOf(event.target.tagName.toLowerCase()) != -1) {
             return;
         }
 

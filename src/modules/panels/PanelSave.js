@@ -152,7 +152,7 @@ class PanelSave extends HTMLElement
      * @returns {string}
      */
     HTMLLanguageSuggest() {
-        return `<span class="snipItTag">${this.properties.detectedLanguage}</span>
+        return `<span class="snipItTagValue">${this.properties.detectedLanguage}</span>
                 <small>(detected; <a href="#!" id="snipItPanelSaveShowSelectLanguage">change</a>)</small>`;
     }
 
@@ -184,7 +184,7 @@ class PanelSave extends HTMLElement
 
     HTMLButton() {
         return `<button type="button" id="snipItPanelSaveSubmitButton">
-                    ${ !this.waitingXHR ? "Save!" :
+                    ${ !this.waitingXHR ? "Save" :
                         `<div class="snipit-spinner">
                           <div class="rect1"></div>
                           <div class="rect2"></div>

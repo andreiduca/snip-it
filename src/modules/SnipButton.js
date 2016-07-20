@@ -3,7 +3,8 @@
 import HTMLElement from "./HTMLElement";
 
 const snipButtonId = "snipItButton";
-const snipButtonText = "Snip It!";
+const snipButtonText = "<s/>";
+const snipButtonTitle = "SnipIt!";
 
 class SnipButton extends HTMLElement
 {
@@ -14,6 +15,7 @@ class SnipButton extends HTMLElement
     create() {
         let btn = super.create();
         btn.innerText = snipButtonText;
+        btn.title = snipButtonTitle;
 
         return btn;
     }
