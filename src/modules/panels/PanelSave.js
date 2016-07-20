@@ -189,8 +189,9 @@ class PanelSave extends HTMLElement
      */
     HTMLLanguageSelect() {
         return `<select id="snipItPanelSaveSelectLanguage">
+                    <option value="">- select a language -</option>
                     ${ LanguageDetector.languages().map( (item) => {
-                        let isSelected = null;
+                        let isSelected = '';
                         if (this.properties.selectedLanguage == item) {
                             isSelected = `selected="selected"`;
                         }
@@ -263,11 +264,11 @@ class PanelSave extends HTMLElement
     }
 
     onSaveSuccess(response) {
-        console.log("YAY, ajax done!", response);
+        // console.log("YAY, ajax done!", response);
     }
 
     onUnauthorized() {
-        console.log("bad happened :(");
+        // console.log("bad happened :(");
     }
 }
 
