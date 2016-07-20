@@ -1,6 +1,7 @@
 "use strict";
 
 import HTMLElement from "../HTMLElement";
+import AppConfig from "../../config/index";
 
 const panelSaveDoneId = "snipItPanelSaveDone";
 
@@ -42,8 +43,11 @@ class PanelSaveDone extends HTMLElement
         return `
             <div>
                 <h1>Snipped!</h1>
-                <p>You code has been saved.</p>
-                <button type="button" id="snipItPanelSaveDoneClose">close</button>
+                <p>
+                    You code has been saved.
+                    View it on <a href="${AppConfig.application.baseURL}" target="_blank">${AppConfig.application.baseURL}</a>
+                </p>
+                <button type="button" id="snipItPanelSaveSubmitButton">close</button>
             </div>`;
     }
 
