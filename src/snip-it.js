@@ -3,4 +3,6 @@
 
 import SnipIt from "./app/SnipIt";
 
-SnipIt.init({window, document});
+if (window.location.origin.indexOf('snipit.xyz') == -1) {
+    SnipIt.init({window, document});
+}

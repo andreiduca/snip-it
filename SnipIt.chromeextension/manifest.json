@@ -2,14 +2,14 @@
   "manifest_version": 2,
 
   "name": "SnipIt",
-  "description": "",
   "version": "1.0",
-
-  "permissions": [
-    "http://127.0.0.1/*",
-    "http://localhost/*",
-    "http://192.168.99.100/*"
-  ],
+  "description": "SnipIt allows you to easily save and organize code snippets in the cloud.",
+  "homepage_url": "http://snipit.xyz",
+  "icons": {
+    "64": "icons/logo-64.png",
+    "128": "icons/logo-128.png",
+    "512": "icons/logo-512.png"
+  },
 
   "content_scripts": [{
     "matches": ["<all_urls>"],
