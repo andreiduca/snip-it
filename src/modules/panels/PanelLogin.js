@@ -54,12 +54,12 @@ class PanelLogin extends HTMLElement
     }
 
     loginWithGoogle() {
-        var loginWindow = this._window.open(AppConfig.api.baseURL + '/auth/google');
+        var loginWindow = this._window.open(AppConfig.application.baseURL + '/auth/google/selfclose');
         loginWindow.onunload = this.loginWindowClose;
     }
 
     loginWithGithub() {
-        var loginWindow = this._window.open(AppConfig.api.baseURL + '/auth/github');
+        var loginWindow = this._window.open(AppConfig.application.baseURL + '/auth/github/selfclose');
         loginWindow.onunload = this.loginWindowClose;
     }
 
