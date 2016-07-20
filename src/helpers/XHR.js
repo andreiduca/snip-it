@@ -13,6 +13,7 @@ class XHR
 
         xhr.setRequestHeader('Content-type', 'application/json');
         xhr.setRequestHeader('Accept', 'application/json');
+        xhr.withCredentials = true;
 
         xhr.onerror = () => {
             if (typeof onFail === 'function') { onFail(); }

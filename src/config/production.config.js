@@ -1,5 +1,5 @@
 module.exports = {
     api: {
-        baseURL: ''
+        baseURL: 'http://snipit.xyz/api'
     }
 };
