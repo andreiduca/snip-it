@@ -78,6 +78,12 @@
     }
   }
 
+  input[type="text"].tagsInput {
+    display: inline-block !important;
+    width: auto !important;
+    padding: 3px 6px !important;
+  }
+
   input[type="text"],
   textarea {
     box-sizing: border-box !important;

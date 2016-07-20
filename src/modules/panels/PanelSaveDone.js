@@ -29,7 +29,7 @@ class PanelSaveDone extends HTMLElement
     }
 
     initControls() {
-        let saveDoneClose = this._document.getElementById("snipItPanelSaveDoneClose");
+        let saveDoneClose = this._document.getElementById("snipItPanelSaveSubmitButton");
         if (saveDoneClose) {
             saveDoneClose.onclick = this.closePanel.bind(this);
         }

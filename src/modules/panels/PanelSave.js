@@ -106,6 +106,22 @@ class PanelSave extends HTMLElement
             };
         }
 
+        let tagInput = this._document.getElementById("snipItPanelSaveTagsInput");
+        if (tagInput) {
+            tagInput.onkeydown = (event) => {
+                if ([',', ';', 'Enter'].indexOf(event.key) != -1) {
+                    event.preventDefault();
+                    event.stopPropagation();
+
+                    if (this.properties.tags.indexOf(tagInput.value.toLowerCase()) == -1) {
+                        this.properties.tags.push(tagInput.value);
+                        this.draw();
+                        this._document.getElementById("snipItPanelSaveTagsInput").focus();
+                    }
+                }
+            };
+        }
+
         let codeBlock = this._document.getElementById("snipItPanelSaveCodeBlock");
         if (codeBlock) {
             codeBlock.onkeyup = codeBlock.onblur = () => {
@@ -138,6 +154,7 @@ class PanelSave extends HTMLElement
                         ${ this.properties.tags.map((item, index) => {
                                 return `<span class="snipItTag" id="snipItPanelSaveTag_${index}" title="Remove this tag">${item}</span>`;
                             }).join(' ') }
+                        ${ this.HTMLTagsInput() }
                     </div>
                     <div>
                         <label for="snipItPanelSaveCodeBlock">Code:</label>
@@ -180,6 +197,10 @@ class PanelSave extends HTMLElement
                         return `<option value="${item}" ${isSelected}>${item}</option>`;
                     }) }
                 </select>`;
+    }
+
+    HTMLTagsInput() {
+        return `<input type="text" id="snipItPanelSaveTagsInput" class="tagsInput" />`;
     }
 
     HTMLButton() {
