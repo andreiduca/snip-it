@@ -30,10 +30,10 @@
 
     &::after {
       content: "\00d7"; // multiplication sign
-      display: inline-block;
-      width: 12px;
-      height: 12px;
-      margin-left: 3px;
+      display: inline-block !important;;
+      width: 12px !important;;
+      height: 12px !important;;
+      margin-left: 3px !important;;
       line-height: 1 !important;
       vertical-align: text-bottom !important;
       text-align: center !important;
