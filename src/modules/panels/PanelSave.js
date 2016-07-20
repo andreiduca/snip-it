@@ -161,7 +161,6 @@ class PanelSave extends HTMLElement
      */
     HTMLCategorySelect() {
         return `<select id="snipItPanelSaveSelectCategory">
-                    <option value="">no category</option>
                     ${ this.userCategories.map( (item) => {
                         return `<option value="${item.id}">${item.name}</option>`;
                     }) }
