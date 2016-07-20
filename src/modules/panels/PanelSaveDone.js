@@ -30,7 +30,7 @@ class PanelSaveDone extends HTMLElement
     }
 
     initControls() {
-        let saveDoneClose = this._document.getElementById("snipItPanelSaveSubmitButton");
+        let saveDoneClose = this._document.getElementById("snipItPanelSaveDoneClose");
         if (saveDoneClose) {
             saveDoneClose.onclick = this.closePanel.bind(this);
         }
@@ -47,7 +47,7 @@ class PanelSaveDone extends HTMLElement
                     You code has been saved.
                     View it on <a href="${AppConfig.application.baseURL}" target="_blank">${AppConfig.application.baseURL}</a>
                 </p>
-                <button type="button" id="snipItPanelSaveSubmitButton">close</button>
+                <button type="button" id="snipItPanelSaveDoneClose">close</button>
             </div>`;
     }
 
