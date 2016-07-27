@@ -146,7 +146,7 @@ class PanelSave extends HTMLElement
                         ${ this.HTMLCategorySelect() }
                     </div>
                     <div>
-                        <label class="snipItInlineLabel" for="snipItPanelSaveSelectLanguage">Language:</label>
+                        <label class="snipItInlineLabel" for="snipItPanelSaveSelectLanguage">Syntax:</label>
                         ${ this.properties.detectedLanguage ? this.HTMLLanguageSuggest() : this.HTMLLanguageSelect() }
                     </div>
                     <div>
@@ -189,7 +189,7 @@ class PanelSave extends HTMLElement
      */
     HTMLLanguageSelect() {
         return `<select id="snipItPanelSaveSelectLanguage">
-                    <option value="">- select a language -</option>
+                    <option value="">- plain text -</option>
                     ${ LanguageDetector.languages().map( (item) => {
                         let isSelected = '';
                         if (this.properties.selectedLanguage == item) {
