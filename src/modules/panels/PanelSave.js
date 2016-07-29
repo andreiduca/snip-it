@@ -109,7 +109,9 @@ class PanelSave extends HTMLElement
         let tagInput = this._document.getElementById("snipItPanelSaveTagsInput");
         if (tagInput) {
             tagInput.onkeydown = (event) => {
-                if ([',', ';', 'Enter'].indexOf(event.key) != -1) {
+                let keyPressed = event.keyCode || event.which;
+
+                if ([186, 188, 190, 13].indexOf(keyPressed) != -1) { // semicolon, comma, period or Enter
                     event.preventDefault();
                     event.stopPropagation();
 
