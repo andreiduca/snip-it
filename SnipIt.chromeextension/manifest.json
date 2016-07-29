@@ -2,7 +2,7 @@
   "manifest_version": 2,
 
   "name": "SnipIt",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "SnipIt allows you to easily save and organize code snippets in the cloud.",
   "homepage_url": "http://snipit.xyz",
   "icons": {
