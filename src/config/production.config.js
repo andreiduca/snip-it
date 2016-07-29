@@ -1,8 +1,8 @@
 module.exports = {
     application: {
-        baseURL: 'http://snipit.xyz'
+        baseURL: 'https://snipit.xyz'
     },
     api: {
-        baseURL: 'http://snipit.xyz/api'
+        baseURL: 'https://snipit.xyz/api'
     }
 };
