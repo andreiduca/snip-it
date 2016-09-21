@@ -7,27 +7,36 @@
     "environment": "production"
   },
   "scripts": {
-    "build": "npm run build-safari && npm run build-chrome",
-    "build:dev": "npm run build-safari:dev && npm run build-chrome:dev",
-    "build:test": "npm run build-safari:test && npm run build-chrome:test",
+    "build": "npm run build-safari && npm run build-chrome && npm run build-firefox",
+    "build:dev": "npm run build-safari:dev && npm run build-chrome:dev && npm run build-firefox:dev",
+    "build:test": "npm run build-safari:test && npm run build-chrome:test && npm run build-firefox:test",
 
     "build-safari": "npm run build-safari-js && npm run build-safari-css",
     "build-safari:dev": "npm run build-safari-js:dev && npm run build-safari-css",
     "build-safari:test": "npm run build-safari-js:test && npm run build-safari-css",
 
-    "build-safari-js": "browserify src/snip-it.js -t babelify -t [ envify --NODE_ENV $npm_package_config_environment ] | uglifyjs --compress --screw-ie8 -o SnipIt.safariextension/js/snip-it.js",
+    "build-safari-js": "browserify src/snip-it.js -t babelify -t [ envify --NODE_ENV $npm_package_config_environment ] | uglifyjs --compress --screw-ie8 -o SnipIt.safari/js/snip-it.js",
     "build-safari-js:dev": "npm run build-safari-js --snip-it:environment=development",
     "build-safari-js:test": "npm run build-safari-js --snip-it:environment=test",
-    "build-safari-css": "node-sass scss/snip-it.scss | cleancss -o SnipIt.safariextension/css/snip-it.css",
+    "build-safari-css": "node-sass scss/snip-it.scss | cleancss -o SnipIt.safari/css/snip-it.css",
 
     "build-chrome": "npm run build-chrome-js && npm run build-chrome-css",
     "build-chrome:dev": "npm run build-chrome-js:dev && npm run build-chrome-css",
     "build-chrome:test": "npm run build-chrome-js:test && npm run build-chrome-css",
 
-    "build-chrome-js": "browserify src/snip-it.js -t babelify -t [ envify --NODE_ENV $npm_package_config_environment ] | uglifyjs --compress --screw-ie8 -o SnipIt.chromeextension/js/snip-it.js",
+    "build-chrome-js": "browserify src/snip-it.js -t babelify -t [ envify --NODE_ENV $npm_package_config_environment ] | uglifyjs --compress --screw-ie8 -o SnipIt.chrome/js/snip-it.js",
     "build-chrome-js:dev": "npm run build-chrome-js --snip-it:environment=development",
     "build-chrome-js:test": "npm run build-chrome-js --snip-it:environment=test",
-    "build-chrome-css": "node-sass scss/snip-it.scss | cleancss -o SnipIt.chromeextension/css/snip-it.css",
+    "build-chrome-css": "node-sass scss/snip-it.scss | cleancss -o SnipIt.chrome/css/snip-it.css",
+
+    "build-firefox": "npm run build-firefox-js && npm run build-firefox-css",
+    "build-firefox:dev": "npm run build-firefox-js:dev && npm run build-firefox-css",
+    "build-firefox:test": "npm run build-firefox-js:test && npm run build-firefox-css",
+
+    "build-firefox-js": "browserify src/snip-it.js -t babelify -t [ envify --NODE_ENV $npm_package_config_environment ] | uglifyjs --compress --screw-ie8 -o SnipIt.firefox/js/snip-it.js",
+    "build-firefox-js:dev": "npm run build-firefox-js --snip-it:environment=development",
+    "build-firefox-js:test": "npm run build-firefox-js --snip-it:environment=test",
+    "build-firefox-css": "node-sass scss/snip-it.scss | cleancss -o SnipIt.firefox/css/snip-it.css",
 
     "check": "jslint --edition=latest src/*.js || true"
   },
