@@ -15,10 +15,10 @@
     "build-safari:dev": "npm run build-safari-js:dev && npm run build-safari-css",
     "build-safari:test": "npm run build-safari-js:test && npm run build-safari-css",
 
-    "build-safari-js": "browserify src/snip-it.js -t babelify -t [ envify --NODE_ENV $npm_package_config_environment ] | uglifyjs --compress --screw-ie8 -o SnipIt.safari/js/snip-it.js",
+    "build-safari-js": "browserify src/snip-it.js -t babelify -t [ envify --NODE_ENV $npm_package_config_environment ] | uglifyjs --compress --screw-ie8 -o SnipIt.safariextension/js/snip-it.js",
     "build-safari-js:dev": "npm run build-safari-js --snip-it:environment=development",
     "build-safari-js:test": "npm run build-safari-js --snip-it:environment=test",
-    "build-safari-css": "node-sass scss/snip-it.scss | cleancss -o SnipIt.safari/css/snip-it.css",
+    "build-safari-css": "node-sass scss/snip-it.scss | cleancss -o SnipIt.safariextension/css/snip-it.css",
 
     "build-chrome": "npm run build-chrome-js && npm run build-chrome-css",
     "build-chrome:dev": "npm run build-chrome-js:dev && npm run build-chrome-css",
